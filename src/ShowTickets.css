@@ -1,0 +1,87 @@
+/* Background & Layout */
+.show-tickets-container {
+    padding-top: 50px;
+    background-color: #FAFAFA;
+}
+
+/* Heading */
+.title {
+    font-size: 32px;
+    font-weight: 300;
+}
+
+.subtitle {
+    font-size: 18px;
+    color: #555;
+}
+
+/* Form Section */
+.form-section {
+    margin-top: 30px;
+}
+
+/* Labels */
+.input-label {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #333;
+}
+
+/* Input Containers */
+.input-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.input-icon {
+    font-size: 18px;
+    color: #888;
+}
+
+.custom-input {
+    border: none;
+    outline: none;
+    flex-grow: 1;
+    padding: 5px;
+}
+
+/* Country Code Selector */
+.country-code {
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 5px;
+    font-size: 14px;
+}
+
+/* Submit Button */
+.submit-button {
+    width: 100%;
+    background-color: #d84e55;
+    color: white;
+    border: none;
+    padding: 10px 0;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 30px;
+    border-radius: 5px;
+}
+
+/* Footer Background */
+.footer-bg {
+    padding-top: 40px;
+    background-color: #f8f9fa;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .submit-button {
+        width: 80%;
+    }
+}

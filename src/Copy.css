@@ -1,0 +1,87 @@
+
+/* .text-of-red{
+      font-size: smaller !important;
+      line-height: 0.5;
+}
+.copy-2{
+      margin-left: 110px !important;
+      margin-right: 110px  !important;
+      border: none;
+      border-top: 1px solid rgb(210, 208, 208) !important;
+}
+.copybg{
+      background-color: white;
+      padding-top: 10px;
+} */
+
+/* Background Styling */
+.copybg {
+      background-color: #fff;
+      padding: 40px 0;
+  }
+  
+  /* Logo Styling */
+  .logo {
+      width: 120px;
+      display: block;
+  }
+  
+  /* Footer Links */
+  .footer-list {
+      list-style-type: none;
+      padding: 0;
+  }
+  
+  .footer-list li {
+      color: #6c757d;
+      font-size: 14px;
+      cursor: pointer;
+      margin-bottom: 5px;
+  }
+  
+  .footer-list li:hover {
+      color: #d84e55;
+  }
+  
+  /* Footer Bottom */
+  .copy-2 {
+      padding: 20px 0;
+  }
+  
+  /* Social Icons */
+  .social-icon {
+      font-size: 18px;
+      color: #555;
+      transition: 0.3s;
+      cursor: pointer;
+  }
+  
+  .social-icon:hover {
+      color: #d84e55;
+  }
+  
+  /* Responsive Styles */
+  @media screen and (max-width: 768px) {
+      .text-lg-start, .text-lg-end {
+          text-align: center !important;
+      }
+  
+      .footer-list li {
+          font-size: 13px;
+      }
+  }
+  
+  @media screen and (max-width: 576px) {
+      .copybg {
+          padding: 20px 0;
+      }
+  
+      .footer-list li {
+          font-size: 12px;
+      }
+  
+      .social-icon {
+          font-size: 16px;
+      }
+  }
+  

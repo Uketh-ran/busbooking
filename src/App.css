@@ -1,0 +1,88 @@
+.enter-ticket-no{
+      background-color: transparent;
+      border: none;
+}
+.enter-ticket-no::placeholder{
+      font-size: small;
+      font-weight: bold;
+}
+.enterno{
+      width: 300px !important;
+      border-bottom: 1px solid grey;
+      margin-left: 300px !important;
+}
+.bsticket{
+      margin-left: -15px;
+      height: 20px;
+      width: 30px;
+}
+.entermobile{
+      margin-left: 200px;
+}
+.selectpass{
+      margin-left: 800px;
+}
+.select-passeger-button{
+      border: none;
+      background-color:  #d84e55;
+}
+.cancel-copy{
+      margin-top: 400px !important;
+}
+.country-code {
+      border: none;
+      outline: none;
+      background: transparent;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      margin-left: -10px;
+}
+.change-bs{
+      border: none;
+}
+.change-bs-bg{
+      margin-left: 300px;
+      border: 1px solid grey;
+      padding: 10px;
+      width: 50%;
+}
+.change-bs::placeholder{
+      font-weight: lighter;
+}
+.ticketnum{
+      margin-left: 300px !important;
+}
+.change-bs2-bg{
+      margin-left: 50px !important;
+}
+.mobilenum{
+      margin-left: 50px !important;
+}
+.searchinchangecol{
+      margin-left: -200px;
+}
+.searchinchangebutton{
+      margin-top: 60px;
+      border: none;
+      background-color: #d84e55;
+}
+.search-tickets{
+      margin-top: -100px !important;
+      margin-left: 200px;
+}
+.textofsearch-tickets{
+      margin-left: 200px;
+}
+.colof-searchtickets{
+      margin-left: 60px;
+}
+.colof-choosetickets{
+      margin-left: -60px;
+}
+.colof-confrimtickets{
+      margin-left: -60px;
+}
+.bgforchange{
+ background: linear-gradient(to bottom, #cac8c81b, #ffffff);
+}

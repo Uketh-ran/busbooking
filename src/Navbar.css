@@ -1,0 +1,115 @@
+/* Navbar Styles */
+.custom-navbar {
+    background-color: white;
+    padding: 10px 0;
+}
+
+/* Logo */
+.logo {
+    height: 40px;
+}
+
+/* Bus Tickets Button */
+.bus-tickets {
+    margin-left: 20px;
+    display: inline;
+}
+
+.bus-button {
+    background-color: #d84e55;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.bus-button .bus-icon {
+    height: 25px;
+    margin-right: 5px;
+}
+
+.bus-button span {
+    color: white;
+    font-weight: bold;
+}
+
+/* Right Side - Help, Language, Account */
+.right-options {
+    display: flex;
+    align-items: center;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #333;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.nav-icon {
+    margin-right: 5px;
+}
+
+/* Dropdown Styles */
+.dropdown-toggle {
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: #333;
+}
+
+
+.bus-button {
+    background-color: #d84e55;
+    /* Red background */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 130px;
+    height: 90px;
+}
+
+.bus-icon {
+    width: 40px;
+    height: auto;
+    margin-bottom: 5px;
+    filter: brightness(0) invert(1);
+    /* Converts red to white */
+}
+
+.bus-text {
+    font-size: 14px;
+    font-weight: bold;
+}
+.navbar-toggler {
+    background-color: #d84e55 !important; /* Red background */
+    border: none;
+    padding: 8px 12px;
+  }
+  .navbar-toggler-icon {
+    filter: brightness(0) invert(1); /* Converts the default black icon to white */
+  } 
+
+@media screen and (max-width:770px){
+    .bus-tickets{
+        display: none !important;
+    }
+    
+}
+
+.hea-text:hover{
+width: auto !important;
+background-color: #8b8b8b60 !important;
+border-radius: 5px !important;
+}

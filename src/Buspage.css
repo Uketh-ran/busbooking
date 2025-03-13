@@ -1,0 +1,186 @@
+.buses1{
+      border: 1px solid rgba(202, 198, 198, 0.768);
+      width: 85%;
+      margin-left: 110px;
+      padding: 15px;
+      background-color: #f9f9f9;
+}
+.semi{
+      font-size: small;
+}
+.view-seats{
+      width: 70%;
+      font-size:small;
+      border: none;
+      background-color:  #d84e55;
+      margin-left: 73px;
+      position: relative;
+      top: 121px;
+}
+.seat-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transform: rotate(270deg);
+      transform-origin: center;
+      height: 380px;
+      margin-left: -200px;
+    }
+    
+    .seat {
+      text-align: center;
+      margin: 5px;
+    }
+    
+    button.seats-btn {
+      width: 50px;
+      height: 50px;
+      font-weight: bold;
+    }
+    .seat-box {
+      width: 25px;
+      height: 25px;
+      border-radius: 5px;
+    }
+    
+
+.seat-legend{
+      margin-left: 500px ;
+} 
+.seats-available{
+  margin-top: -25px !important;
+}
+.bus-summary{
+  border: none !important;
+  background-color: white !important;
+}
+.seat-1-container{
+  display: flex;
+}
+@media screen and (max-width:450px) {
+  .buses1{
+    margin-left: 0px;
+    height: auto;
+    width: auto;
+  }
+  .seats-available{
+    margin-top: 10px !important;
+  }
+  .view-seats{
+    top: 160px;
+    width: auto;
+    left: 135px;
+  }
+  .seat-container {
+    transform: rotate(0deg);
+    margin-left: -15px;
+    height: auto;
+  }
+  .seat-1-container{
+    display: block;
+  }
+  .seat-legend{
+    margin-left: 30px;
+    margin-top: 25px;
+  }
+}
+
+@media screen and (max-width:376px) {
+  .view-seats{
+    left: 110px;
+  }
+}
+@media screen and (max-width:321px) {
+
+  .buses1{
+    margin-left: 10px;
+  }
+  .view-seats{
+    left: 75px;
+  }
+}
+.semi,.media-busname,.media-duration,.media-arrival,.media-fare,.media-seats-available,.media-departure{
+  margin-left: .5rem;
+}
+
+
+@media screen and (max-width:770px) and (min-width:451px) {
+  .bus-summary{
+    width: auto !important;
+    /* margin-left: 124px !important; */
+  }
+  .media-buses1{
+    width: 86%;
+    margin-left: 10px;
+    position: relative;
+    left: 2px;
+    box-sizing: initial !important;
+  }
+  .media-busname{
+    margin-left: auto;
+  }
+  h4{
+    width: 90%;
+    margin-left: 53px;
+  }
+  .media-semi{
+    margin-left: -45px;
+  }
+  .seats-available{
+    position: relative;
+    left: 40px;
+    width: fit-content !important;
+  }
+  .bus-summary{
+    margin-left: 125px;
+  }
+  .media-duration{
+    margin-left: -85px !important;
+  }
+  .media-arrival{
+    margin-left: -175px !important;
+  }
+  .media-fare{
+    margin-left: 340px;
+    position: relative;
+    top: -24px;
+  }
+  .media-seats-available{
+    margin-left: 235px;
+    position: relative;
+    top: -24px;
+  }
+  .media-seats-available1{
+    margin-left: 235px;
+  }
+  .media-departure{
+    margin-left: 8px;
+  }
+  .view-seats{
+    width: 100px;
+    left: -70px;
+  }
+  .seat-container{
+    position: relative;
+    left: 175px;
+  }
+  .seat-legend{
+    margin-left: 395px;
+  }
+}
+@media screen and (max-width:1025px) and (min-width:770px){
+  .view-seats{
+    left: -22px;
+  }
+  .seat-container{
+    margin-left: 0px;
+  }
+  .seat-legend{
+    margin-left: 260px;
+  }
+}
+@media screen and (max-width:1441px) and (min-width:1026px){
+  .view-seats{
+    left: -5px;
+  }
+}

@@ -1,0 +1,222 @@
+.helpbg{
+      background-color:   #d84e55 !important;
+      height: 850px;
+}
+.faq{
+      background-color: rgb(235, 235, 235);
+      height: 750px !important;
+      border-radius: 5px;
+      
+}
+.redbus_faqs{
+      background-color: white;
+      width: 95%;
+      margin-left: 10px;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      position: relative;
+      top: 15px;
+}
+.help_topics{
+      color: rgba(109, 108, 108, 0.75);
+}
+.tickets{
+      background-color: white;
+      width: 95%;
+      margin-left: 10px;
+      border: none;
+      text-align: left;
+}
+.arrow1{
+      margin-left: 182px;
+}
+.arrow2{
+      margin-left: 58px;
+}
+.arrow3{
+      margin-left: 169px;
+}
+.arrow4{
+      margin-left: 241px;
+}
+.arrow5{
+      margin-left: 138px;
+}
+.arrow6{
+      margin-left: 189px;
+}
+.arrow7{
+      margin-left: 90px;
+}
+.arrow8{
+      margin-left: 184px;
+}
+.arrow9{
+      margin-left: 194px;
+}
+.arrow10{
+      margin-left: 210px;
+}
+.leftarrow{
+      margin-left: -36px;
+      position: relative;
+      top: 10px;
+}
+.tcb_faq{
+      overflow-y: scroll;
+      padding-bottom: 20px;
+}
+.trc-faq{
+      overflow-y: unset !important;
+}
+
+.faq, .tcb_faq {
+      transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+      position: absolute;
+      width: 100%;
+  }
+  
+  .faq {
+      transform: translateX(0);
+      opacity: 1;
+      width: 400px;
+  }
+  
+  .faq.slide-out {
+      transform: translateX(-100%);
+      opacity: 0;
+      width: 400px;
+  }
+  
+  .tcb_faq {
+      transform: translateX(100%);
+      opacity: 0;
+      visibility: hidden;
+  }
+  
+  .tcb_faq.slide-in {
+      transform: translateX(0);
+      opacity: 1;
+      visibility: visible;
+  }
+  
+  .hidden {
+      display: none;
+  }
+  
+  .reschedule{
+      overflow: hidden;
+  }
+  @media screen and (max-width: 1025px) {
+
+      .help-img{
+            width: 390px;
+      }
+      .media-support{
+            width: 120%;
+      }
+}
+.help-img,.media-support,.media-help{
+      margin-left: 3rem;
+}
+  @media screen and (max-width: 770px) {
+
+      .help-img{
+            width: 290px;
+            margin-left: 380px;
+      }
+      .media-help,.media-support{
+            margin-left: 380px;
+      }
+      .help-right{
+            width: 708px;
+      }
+      .help-right0{
+            width: 696px !important;
+      }
+      .media-support{
+            width: auto;
+      }
+}
+@media screen and (max-width: 450px) {
+
+      .help-img,.media-help,.media-support,.help-right,.help-right0,.media-support{
+            display: none;
+      }
+}
+@media screen and (max-width: 376px){
+
+      .media-faq{
+            width: 93%;
+      }
+      .arrow1{
+            margin-left: 152px;
+      }
+      .arrow2{
+            margin-left: 25px;
+      }
+      .arrow3{
+            margin-left: 140px;
+      }
+      .arrow4{
+            margin-left: 213px;
+      }
+      .arrow5{
+            margin-left: 110px;
+      }
+      .arrow6{
+            margin-left: 162px;
+      }
+      .arrow7{
+            margin-left: 63px;
+      }
+      .arrow8{
+            margin-left: 157px;
+      }
+      .arrow9{
+            margin-left: 167px;
+      }
+      .arrow10{
+            margin-left: 185px;
+      }
+}
+@media screen and (max-width: 321px){
+
+      .media-faq{
+            width: 93%;
+      }
+      .mediacancellation{
+            margin-left: 49px;
+      }
+      .arrow1{
+            margin-left: 103px;
+      }
+      .arrow2{
+            margin-left: 114px;
+            position: relative;
+            top: -25px;
+      }
+      .arrow3{
+            margin-left: 91px;
+      }
+      .arrow4{
+            margin-left: 164px;
+      }
+      .arrow5{
+            margin-left: 61px;
+      }
+      .arrow6{
+            margin-left: 113px;
+      }
+      .arrow7{
+            margin-left: 15px;
+      }
+      .arrow8{
+            margin-left: 108px;
+      }
+      .arrow9{
+            margin-left: 118px;
+      }
+      .arrow10{
+            margin-left: 136px;
+      }
+}

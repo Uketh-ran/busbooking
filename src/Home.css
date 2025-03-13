@@ -1,0 +1,457 @@
+.homebg {
+    background-image: url('./Homepage-header-800.webp');
+    width: 100%;
+    height: 500px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.from {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border: none;
+    height: 90px;
+    padding-left: 40px;
+    width: 300px;
+    margin-left: 5px;
+}
+
+.to {
+    border: none;
+    height: 90px;
+    border-left: 1px solid grey;
+    margin-left: -110px;
+    padding-left: 80px;
+    width: 300px;
+}
+
+.bus1 {
+    position: relative;
+    left: 85px;
+    height: 30px;
+    width: 50px;
+    color: grey;
+}
+
+.bus2 {
+    position: relative;
+    left: -20px;
+    height: 30px;
+    width: 50px;
+    color: grey;
+}
+
+.datepicker-input {
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    width: 200px;
+    font-size: 16px;
+    height: 1px;
+    margin-left: -40px;
+    padding-top: 10px;
+}
+
+input:focus,
+.datepicker-input:focus {
+    outline: none;
+}
+
+.date_icon {
+    height: 30px;
+    width: 50px;
+    color: rgb(151, 147, 147);
+}
+
+.date-button {
+    border: none;
+    background-color: white;
+    height: 90px;
+    border-left: 1px solid grey !important;
+    padding-top: 6px;
+}
+
+.search-button {
+    background-color: #d84e55;
+    color: white;
+    border: none;
+    border-left: 1px solid grey !important;
+    height: 90px;
+    width: 200px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.from-text {
+    position: relative;
+    left: 80px;
+    color: grey;
+    top: -20px;
+    cursor: pointer;
+}
+
+.to-text {
+    left: -20px;
+}
+
+.date-text {
+    color: grey;
+    cursor: pointer;
+    position: relative;
+    top: -20px;
+}
+
+.gobutton {
+    position: relative;
+    left: -20px;
+    padding: 5px 10px;
+    background-color: white;
+    border: 1px solid rgb(166, 165, 165);
+    border-radius: 50%;
+}
+
+/* Default Styles */
+.homebg {
+    padding: 2rem;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+/* Input & Button Containers */
+/* .from, .to, .datepicker-input {
+    width: 200px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+.gobutton, .search-button {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    background-color: #d84e55;
+    color: white;
+}
+
+.search-button {
+    padding: 12px 20px;
+}
+
+.date-button {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+.bus1, .bus2 {
+    font-size: 30px;
+    margin: 0 10px;
+} */
+
+/* Media Queries */
+@media screen and (max-width: 1024px) and (min-width:769px) {
+
+    .from,
+    .to,
+    .datepicker-input {
+        width: 180px;
+        font-size: 0.9rem;
+    }
+
+    .mediaform {
+        margin-left: -95px;
+    }
+
+    .bus1,
+    .bus2 {
+        font-size: 28px;
+    }
+
+    .search-button {
+        font-size: 0.9rem;
+        padding: 10px 15px;
+    }
+}
+
+@media screen and (max-width: 768px) and (min-width:451px) {
+    .homebg {
+        padding: 1rem;
+    }
+
+    .mediaform {
+        margin-left: -250px;
+    }
+
+    .bg {
+        height: 90px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .from,
+    .to {
+        width: 170px;
+        font-size: 0.85rem;
+    }
+    
+    .datepicker-input {
+        width: 100px;
+        font-size: 0.85rem;
+    }
+
+    .date-button {
+        position: relative;
+        top: -3px;
+    }
+
+    .bus1,
+    .bus2 {
+        font-size: 24px;
+    }
+
+    .search-button {
+        font-size: 0.8rem;
+        padding: 4px 6px;
+        width: 150px !important;
+        margin-left: 594px;
+        position: relative;
+        top: -93px;
+    }
+
+    .gobutton,
+    .date-button {
+        padding: 8px;
+        font-size: 0.8rem;
+    }
+}
+
+@media screen and (max-width: 450px) {
+
+    .from,
+    .to,.date-button,.media-search {
+        width: 80%;
+        font-size: 0.8rem;
+        border-radius: 10px;
+        height: 60px;
+        border-bottom: 1px solid grey;
+    }
+    .input-mediafrom {
+        padding-left: 90px;
+        padding-top: 10px;
+      }
+    .media-bus-from {
+        position: relative;
+        left: -130px;
+        top: 50px;
+        height: 30px;
+        width: 50px;
+    }
+    .media-from{
+        position: relative;
+        left: -130px;
+        top: 50px;
+    }
+
+    .mediaform {
+        margin-left: 20px;
+    }
+    .mediachange-button{
+        position: relative;
+        left: -157px;
+        top: 22px;
+    }
+    .to{
+        margin-left: -90px;
+        padding-left: 70px;
+    }
+    .bus2,.media-to{
+        position: relative;
+        left: -33px;
+    }
+    .media-to{
+        top: 0px;
+    }
+    .date-button{
+        margin-top: 0px;
+        margin-left: -25px;
+    }
+    .date_icon{
+        position: relative;
+        left: -20px;
+    }
+    .date-text{
+        position: relative;
+        left: -27px;
+        top: 0px;
+        font-size: 0.8rem;
+    }
+    .datepicker-input{
+        margin-left: 0px;
+        padding-left: 0px;
+    }
+    .media-search{
+       margin-left: -25px;
+       position: relative;
+       top: 0px;
+       border: none !important;
+    }
+    .bg {
+        height: 158px;
+    }
+
+    .bus1,
+    .bus2 {
+        font-size: 22px;
+    }
+
+    .search-button {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+        width: 80% !important;
+    }
+
+    .gobutton {
+        font-size: 0.75rem;
+        padding: 6px;
+    }
+
+    .date-button {
+        font-size: 0.75rem;
+        padding: 6px;
+    }
+}
+/* Adjustments for max-width: 376px */
+@media screen and (max-width: 376px) {
+    .from,
+    .to,
+    .date-button,
+    .media-search {
+        width: 85%;
+        font-size: 0.75rem;
+        height: 55px;
+    }
+    .to {
+        margin-left: -90px;
+        padding-left: 70px;
+    }
+    .input-mediafrom {
+        padding-left: 90px;
+    }
+
+    .media-bus-from,
+    .media-from {
+        left: -118px;
+        top: 43px;
+    }
+
+    .mediachange-button {
+        left: -140px;
+        top: 20px;
+    }
+
+    .bus2,
+    .media-to {
+        left: -32px;
+    }
+    .date_icon{
+        left: -105px;
+        top: 8px;
+    }
+    .date-text {
+        left: -112px;
+        top: 8px;
+        font-size: 0.8rem;
+    }
+
+    .datepicker-input {
+        margin-left: 70px;
+        position: relative;
+        top: -20px;
+        
+    }
+    .search-button{
+        margin-top: -3px;
+        width: 85% !important;
+    }
+    .search-button,
+    .gobutton,
+    .date-button {
+        font-size: 0.7rem;
+        padding: 5px 8px;
+    }
+}
+
+/* Adjustments for max-width: 321px */
+@media screen and (max-width: 321px) {
+    .from,
+    .to,
+    .date-button,
+    .media-search {
+        width: 90%;
+        font-size: 0.7rem;
+        height: 50px;
+    }
+    .from{
+        margin-left: 3px;
+        padding-left: 95px;
+        padding-top: 5px;
+    }
+    .to{
+        margin-left: -86px;
+        padding-left: 70px;
+    }
+    .date_icon{
+        left: -82px;
+    }
+    .media-bus-from,
+    .media-from {
+        left: -90px;
+        top: 42px;
+    }
+
+    .mediachange-button {
+        left: -120px;
+        top: 18px;
+    }
+
+    .bus2,
+    .media-to {
+        left: -20px;
+    }
+    .mediachange-button{
+        left: -135px;
+        top: 21px;
+    }
+    .date-button{
+        margin-left: -20px;
+    }
+    .date-text {
+        left: -90px;
+        font-size: 0.75rem;
+    }
+
+    .datepicker-input {
+        margin-left: 80px;
+        width: 100px;
+    }
+
+    .search-button,
+    .gobutton,
+    .date-button {
+        font-size: 0.65rem;
+        padding: 4px 6px;
+    }
+}

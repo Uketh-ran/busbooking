@@ -1,0 +1,118 @@
+/* Background & Layout */
+.change-date-container {
+    padding-top: 50px;
+    background-color: #FAFAFA;
+}
+
+/* Heading */
+.title {
+    font-size: 32px;
+    font-weight: 300;
+}
+
+.subtitle {
+    font-size: 18px;
+    color: #555;
+}
+
+/* Form Section */
+.form-section {
+    margin-top: 30px;
+}
+
+/* Labels */
+.input-label {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #333;
+}
+label.input-label {
+    margin-left: auto;
+}
+
+/* Input Containers */
+.input-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.input-icon {
+    font-size: 18px;
+    color: #888;
+}
+
+.custom-input {
+    border: none;
+    outline: none;
+    flex-grow: 1;
+    padding: 5px;
+}
+
+/* Country Code Selector */
+.country-code {
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 5px;
+    font-size: 14px;
+}
+
+/* Search Button */
+.search-ticket-button {
+    width: 100%;
+    background-color: #d84e55;
+    color: white;
+    border: none;
+    padding: 10px 0;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 30px;
+    border-radius: 5px;
+}
+
+/* How It Works Section */
+.how-it-works {
+    padding-top: 50px;
+}
+
+.how-title {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.how-step {
+    margin-top: 30px;
+}
+
+.how-img {
+    max-width: 100px;
+}
+
+.how-step-title {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.how-step-text {
+    font-size: 14px;
+    color: #666;
+    max-width: 80%;
+    margin: auto;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .search-button {
+        width: 80%;
+    }
+
+    .how-step-text {
+        max-width: 100%;
+    }
+}
