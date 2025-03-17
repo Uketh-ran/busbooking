@@ -1,0 +1,65 @@
+.show-tickets-container {
+    background: linear-gradient(to bottom, #f8f8f8, white);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0;
+  }
+  
+  .title {
+    font-size: 40px;
+    margin-bottom: 10px;
+  }
+  
+  .subtitle {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 30px;
+  }
+  
+  .input-label1 {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .input-container1 {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    background: white;
+    width: 80%;
+  }
+  
+  .input-icon {
+    font-size: 18px;
+    margin-right: 10px;
+    color: #888;
+  }
+  
+  .custom-input {
+    border: none;
+    flex-grow: 1;
+    outline: none;
+  }
+  
+  .country-code {
+    border: none;
+    background: transparent;
+    outline: none;
+  }
+  
+  .submit-button {
+    background-color: #d84e55;
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+  }
+  
+ 
+  

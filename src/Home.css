@@ -1,4 +1,4 @@
-.homebg {
+/* .homebg {
     background-image: url('./Homepage-header-800.webp');
     width: 100%;
     height: 500px;
@@ -111,7 +111,6 @@ input:focus,
     border-radius: 50%;
 }
 
-/* Default Styles */
 .homebg {
     padding: 2rem;
 }
@@ -120,46 +119,7 @@ h1 {
     font-size: 2rem;
 }
 
-/* Input & Button Containers */
-/* .from, .to, .datepicker-input {
-    width: 200px;
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    text-align: center;
-}
 
-.gobutton, .search-button {
-    padding: 10px;
-    font-size: 1rem;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    background-color: #d84e55;
-    color: white;
-}
-
-.search-button {
-    padding: 12px 20px;
-}
-
-.date-button {
-    display: flex;
-    align-items: center;
-    padding: 8px;
-    background: white;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-
-.bus1, .bus2 {
-    font-size: 30px;
-    margin: 0 10px;
-} */
-
-/* Media Queries */
 @media screen and (max-width: 1024px) and (min-width:769px) {
 
     .from,
@@ -333,7 +293,6 @@ h1 {
         padding: 6px;
     }
 }
-/* Adjustments for max-width: 376px */
 @media screen and (max-width: 376px) {
     .from,
     .to,
@@ -394,7 +353,6 @@ h1 {
     }
 }
 
-/* Adjustments for max-width: 321px */
 @media screen and (max-width: 321px) {
     .from,
     .to,
@@ -454,4 +412,136 @@ h1 {
         font-size: 0.65rem;
         padding: 4px 6px;
     }
+} */
+
+.home-bg {
+    background-image: url('./Homepage-header-800.webp');
+    width: 100%;
+    height: 550px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+ /* Heading */
+.heading {
+    color: white;
+    font-weight: bold;
+    padding-top: 30px;
+  }
+  
+  /* Search Bar */
+  .search-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 10px;
+    width: auto; /* Adjust width as needed */
+    max-width: 900px; /* Limits container width */
+    position: relative;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 100px;
+    background-color: white;
+  }
+  
+  /* Input Fields */
+  .input-box {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    background: #fff;
+    padding: 15px 15px;
+    border-radius: 0px;
+    margin: 5px;
+    border-right: 1px solid #b6b2b2; /* Adds a divider */
+    font-weight: 500;
+    color: #444;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+  }
+  
+  .input-box input {
+    border: none;
+    outline: none;
+    font-size: 16px;
+    width: 100%;
+    margin-left: 10px;
+  }
+  
+  /* Swap Button */
+  .swap-btn {
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  .swap-icon {
+    font-size: 18px;
+    color: #555;
+  }
+  
+  /* Date Picker */
+  .input-box .react-datepicker-wrapper {
+    width: 100%;
+  }
+  
+  /* Search Button */
+  .search-btn {
+    background: #d84e55;
+    color: white;
+    font-weight: bold;
+    border-left: 1px solid #b6b2b2 !important;
+    padding: 21px 30px;
+    padding-right: 32px;
+    border-radius: 0 10px 10px 0;
+    cursor: pointer;
+    font-size: 16px;
+    width: auto;
+    border: none;
+  }
+  
+  .icon{
+    height: 26px;
+    width: 22px;
+  }
+  /* Tagline */
+  .tagline {
+    color: #ffdd99;
+    font-size: 22px;
+    margin-top: 20px;
+  }
+.date-input-box{
+    border: none !important;
 }
+  /* Responsive */
+  @media screen and  (max-width: 769px) {
+    .search-container {
+      flex-direction: column;
+      width: 90%;
+      padding: 15px;
+      border-radius: 20px;
+      background-color: transparent !important;
+    }
+    .input-box{
+        border: 1px solid grey;
+        border-radius: 10px;
+    }
+    .search-btn {
+      width: auto;
+      border-radius: 20px;
+      border-left: none !important;
+    }
+  
+    .swap-btn {
+      margin: 10px 0;
+    }
+  }

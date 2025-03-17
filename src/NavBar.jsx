@@ -66,7 +66,7 @@ const CustomNavbar = () => {
                   <Dropdown.Item as={Link} to="/show-my-ticket" onClick={closeMenu}>
                     Show My Ticket
                   </Dropdown.Item>
-                  <Dropdown.Item as={Link} to="/email-sms" onClick={closeMenu}>
+                  <Dropdown.Item as={Link} to="/email" onClick={closeMenu}>
                     Email/SMS
                   </Dropdown.Item>
                   <Dropdown.Item onClick={() => { setShowModal(true); closeMenu(); }}>

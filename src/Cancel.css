@@ -1,59 +1,26 @@
-@media screen and (max-width:450px)  and (min-width:327px){
-    .enterno{
-        margin-left: 100px !important;
+
+  .enter-no-cancel{
+    border-bottom: 1px solid #3b3b3b;
+    width: 28% !important;
+  }
+  
+  .bg-change{
+    background-color: #f8f9fa ;
+  }
+  
+  .btn-slt-pass {
+    background-color:  #d84e55;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    width: 80%;
+    margin-bottom: 200px;
+  }
+  .cyt{
+    background-color: transparent;
+  }
+  @media screen and (max-width:993px) {
+    .enter-no-cancel{
         width: auto !important;
     }
-    .select-passeger-button{
-        margin-left: auto !important;
-        padding: 10px !important;
-    }
-    .selectpass{
-        margin-left: 110px !important;
-        width: fit-content !important;
-    }
-}
-@media screen and (max-width:376px) {
-    .selectpass{
-        margin-left: 85px !important;
-    }
-    
-}
-@media screen and (max-width:326px) {
-    .selectpass{
-        margin-left: 60px !important;
-        width: auto !important;
-    }
-    .enterno{
-        margin-left: 50px !important;
-        width: auto !important;
-    }
-    .select-passeger-button{
-        margin-left: auto !important;
-        padding: 10px !important;
-    }
-    
-}
-@media screen and (max-width:1025px) and (min-width:451px) {
-    .enterno{
-        margin-left: 130px !important;
-    }
-    .selectpass{
-        margin-left: 375px !important;
-        width: auto !important;
-    }
-    
-}
-@media screen and (max-width:770px) and (min-width:451px) {
-    .enterno{
-        margin-left: 250px !important;
-    }
-    .selectpass{
-        margin-left: 250px !important;
-        width: auto !important;
-    }
-    
-}
-.select-passeger-button{
-    padding-left: 3rem;
-    padding-right: 3rem ;
-}
+  }

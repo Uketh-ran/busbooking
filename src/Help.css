@@ -25,36 +25,13 @@
       margin-left: 10px;
       border: none;
       text-align: left;
+      position: relative;
 }
 .arrow1{
-      margin-left: 182px;
-}
-.arrow2{
-      margin-left: 58px;
-}
-.arrow3{
-      margin-left: 169px;
-}
-.arrow4{
-      margin-left: 241px;
-}
-.arrow5{
-      margin-left: 138px;
-}
-.arrow6{
-      margin-left: 189px;
-}
-.arrow7{
-      margin-left: 90px;
-}
-.arrow8{
-      margin-left: 184px;
-}
-.arrow9{
-      margin-left: 194px;
-}
-.arrow10{
-      margin-left: 210px;
+      position: absolute;
+      right: 10px;
+      top: 25px;
+      /* margin-left: 201px; */
 }
 .leftarrow{
       margin-left: -36px;
@@ -106,77 +83,63 @@
   .reschedule{
       overflow: hidden;
   }
-  @media screen and (max-width: 1025px) {
 
-      .help-img{
-            width: 390px;
-      }
-      .media-support{
-            width: 120%;
-      }
-}
 .help-img,.media-support,.media-help{
       margin-left: 3rem;
 }
-  @media screen and (max-width: 770px) {
+@media screen and (max-width: 1025px) {
 
       .help-img{
-            width: 290px;
-            margin-left: 380px;
-      }
-      .media-help,.media-support{
-            margin-left: 380px;
-      }
-      .help-right{
-            width: 708px;
-      }
-      .help-right0{
-            width: 696px !important;
+            width: 380px;
       }
       .media-support{
             width: auto;
       }
 }
-@media screen and (max-width: 450px) {
+@media screen and (max-width:767px) {
+      
+      .faq-bg{
+            width: auto;
+            margin: 0 auto !important;
+      }
+      .redbus-help{
+            display: none;
+      }
+      
+}
+  @media screen and (max-width: 770px) and (min-width:600px) {
+      .media-faq{
+            width: 80%;
+            margin-left: 70px;
+      }
+     
+}
+@media screen and (max-width:600px){
+      .media-faq{
+            width: 90% !important;
+            margin-left: 11px;
+      }
+}
+@media screen and (max-width: 1023px) {
 
       .help-img,.media-help,.media-support,.help-right,.help-right0,.media-support{
             display: none;
+      }
+      .media-faq{
+            width: 80%;
+      }
+}
+@media screen and (max-width: 993px) and (min-width:771px) {
+
+      .media-faq{
+            width: 80%;
+            margin-left: 80px;
       }
 }
 @media screen and (max-width: 376px){
 
       .media-faq{
             width: 93%;
-      }
-      .arrow1{
-            margin-left: 152px;
-      }
-      .arrow2{
-            margin-left: 25px;
-      }
-      .arrow3{
-            margin-left: 140px;
-      }
-      .arrow4{
-            margin-left: 213px;
-      }
-      .arrow5{
-            margin-left: 110px;
-      }
-      .arrow6{
-            margin-left: 162px;
-      }
-      .arrow7{
-            margin-left: 63px;
-      }
-      .arrow8{
-            margin-left: 157px;
-      }
-      .arrow9{
-            margin-left: 167px;
-      }
-      .arrow10{
-            margin-left: 185px;
       }
 }
 @media screen and (max-width: 321px){
@@ -187,36 +150,12 @@
       .mediacancellation{
             margin-left: 49px;
       }
-      .arrow1{
-            margin-left: 103px;
-      }
-      .arrow2{
-            margin-left: 114px;
-            position: relative;
-            top: -25px;
-      }
-      .arrow3{
-            margin-left: 91px;
-      }
-      .arrow4{
-            margin-left: 164px;
-      }
-      .arrow5{
-            margin-left: 61px;
-      }
-      .arrow6{
-            margin-left: 113px;
-      }
-      .arrow7{
-            margin-left: 15px;
-      }
-      .arrow8{
-            margin-left: 108px;
-      }
-      .arrow9{
-            margin-left: 118px;
-      }
-      .arrow10{
-            margin-left: 136px;
+     
+}
+@media screen and (max-width:1153px) and (min-width:1023px) {
+      .help-img{
+            width: 125%;
       }
 }
+
+

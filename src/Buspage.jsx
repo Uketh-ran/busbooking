@@ -7,6 +7,7 @@ import './Buspage.css';
 import { format, addDays, parse } from 'date-fns';
 import { IoIosArrowRoundUp } from "react-icons/io";
 import { IoIosArrowRoundDown } from "react-icons/io";
+import Copy from "./Copy"
 
 const allBuses = [
   {
@@ -146,29 +147,29 @@ const Buspage = () => {
         {/* Bus Summary Section */}
         <div className='buses1 bus-summary'>
           <Row>
-            <Col lg={2} ></Col>
-            <Col xs={6} sm={4} lg={2}  onClick={() => handleSort('departure')}>
-              <span className='media-departure'>
+            <Col xs={6} md={2} ></Col>
+            <Col xs={6} md={2}  onClick={() => handleSort('departure')}>
+              <span className='media-departure mx-auto'>
                 Departure {sortConfig.key === 'departure' && (sortConfig.ascending ? <IoIosArrowRoundUp /> : <IoIosArrowRoundDown />)}
               </span>
             </Col>
-            <Col xs={6} sm={4} lg={2} onClick={() => handleSort('duration')}>
-              <span className=' media-duration'>
+            <Col xs={6} md={2} onClick={() => handleSort('duration')}>
+              <span className=' media-duration mx-auto'>
                 Duration { sortConfig.key === 'duration' && (sortConfig.ascending ? <IoIosArrowRoundUp /> : <IoIosArrowRoundDown />)}
               </span>
             </Col>
-            <Col xs={6} sm={4} lg={2}  onClick={() => handleSort('arrival')}>
-              <span className=' media-arrival'>
+            <Col xs={6} md={2}  onClick={() => handleSort('arrival')}>
+              <span className=' media-arrival mx-auto'>
                 Arrival {sortConfig.key === 'arrival' && (sortConfig.ascending ? <IoIosArrowRoundUp /> : <IoIosArrowRoundDown />)}
               </span>
             </Col>
-            <Col xs={6} sm={4} lg={2} onClick={() => handleSort('price')}>
-              <span className='media-fare'>
+            <Col xs={6} md={2} onClick={() => handleSort('price')}>
+              <span className='media-fare mx-auto'>
                 Fare {sortConfig.key === 'price' && (sortConfig.ascending ? <IoIosArrowRoundUp /> : <IoIosArrowRoundDown /> )}
               </span>
             </Col>
 
-            <Col xs={12} sm={4} lg={2} ><span className='media-seats-available'>Seats <span className='media-seats-available1'>Available</span></span></Col>
+            <Col xs={6} md={2} ><span className='media-seats-available mx-auto'>Seats <span className='media-seats-available1'>Available</span></span></Col>
           </Row>
         </div>
 
@@ -185,24 +186,24 @@ const Buspage = () => {
               <React.Fragment key={bus.id}>
                 <div className='buses1 media-buses1 mb-5 p-3'>
                   <Row>
-                    <Col xs={12} sm={6} md={2}><span className='text-dark fw-bold media-busname'>{bus.name}</span></Col>
-                    <Col xs={6} sm={3} md={2}>
-                      <span className='text-dark fw-bold ms-2'>{bus.departure}</span>
+                    <Col xs={6} md={2}><span className='text-dark fw-bold media-busname mx-auto'>{bus.name}</span></Col>
+                    <Col xs={6} md={2}>
+                      <span className='text-dark fw-bold mx-auto '>{bus.departure}</span>
                       <br />
-                      <small className='ms-2'>{formattedDate}</small>
+                      <small className='mx-auto'>{formattedDate}</small>
                     </Col>
-                    <Col xs={6} sm={3} md={2}><span className='ms-2'>{bus.duration}</span></Col>
-                    <Col xs={6} sm={3} md={2}>
-                      <span className='text-dark ms-2 fw-bold'>{bus.arrival}</span>
+                    <Col xs={6} md={2}><span className=''>{bus.duration}</span></Col>
+                    <Col xs={6} md={2}>
+                      <span className='text-dark  fw-bold'>{bus.arrival}</span>
                       <br />
-                      <small className={`ms-2 ${isNextDayArrival ? "text-danger" : ""}`}>
+                      <small className={`mx-auto ${isNextDayArrival ? "text-danger" : ""}`}>
                         {formattedArrivalDate}
                       </small>
                     </Col>
-                    <Col xs={6} sm={3} md={2}><span className='ms-2'>INR <span className='text-dark fw-bold ms-1'>{bus.price}</span></span></Col>
-                    <Col xs={12} sm={3} md={2}>
+                    <Col xs={6} md={2}><span className='mx-auto'>INR <span className='text-dark fw-bold ms-1'>{bus.price}</span></span></Col>
+                    <Col xs={6} md={2}>
                       <button
-                        className='text-light view-seats'
+                        className='text-light view-seats mx-auto'
                         onClick={() => {
                           setSelectedBus(selectedBus === bus.id ? null : bus.id);
                           setSelectedSeats([]);
@@ -213,18 +214,18 @@ const Buspage = () => {
                     </Col>
                   </Row>
                   <Row className='mt-2'>
-                    <Col xs={12} sm={6} md={3} lg={2}><span className=' semi media-busname'>{bus.type}</span></Col>
-                    <Col xs={6} sm={3} md={3} lg={4}><span className=' semi media-semi'>{bus.sp}</span></Col>
-                    <Col xs={6} sm={3} md={3} lg={4}><span className=' semi'>{bus.ep}</span></Col>
-                    <Col xs={6} sm={3} md={3} lg={2} className='seats-available'>
-                      <span className=' semi'>
+                    <Col xs={6} md={2}><span className=' semi media-busname mx-auto'>{bus.type}</span></Col>
+                    <Col xs={6} md={2}><span className=' semi media-semi media-arrival-1 mx-auto'>{bus.sp}</span></Col>
+                    <Col xs={6} md={2}><span className=' semi mx-auto '>{bus.ep}</span></Col>
+                    <Col xs={6} md={2} className='seats-available mx-auto'>
+                      <span className=' semi mx-auto'>
                         Seats Available: {availableSeats} <br />
-                        <span className='ms-2'>Total Seats: {totalSeats}</span>
+                        <span className='mx-auto'>Total Seats: {totalSeats}</span>
                       </span>
                     </Col>
                   </Row>
                   <Row className='mt-4'>
-                    <Col lg={2}><BiCctv className='ms-2' /><PiPlugCharging className='ms-2' /></Col>
+                    <Col xs={6} md={2}><BiCctv className='mx-auto' /><PiPlugCharging className='mx-auto' /></Col>
                   </Row>
                 </div>
 
@@ -250,7 +251,7 @@ const Buspage = () => {
                               const isSelected = selectedSeats.includes(seatNumber);
 
                               return (
-                                <Col xs={2} key={seatNumber} className="seat">
+                                <Col xs={6} md={2} key={seatNumber} className="seat">
                                   <Button
                                     variant={isBooked ? "secondary" : "outline-secondary"}
                                     className={`seats-btn 
@@ -296,6 +297,7 @@ const Buspage = () => {
         )}
         <Outlet />
       </Container>
+      <Copy/>
     </div>
   );
 };

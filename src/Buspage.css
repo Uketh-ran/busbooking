@@ -4,18 +4,23 @@
       margin-left: 110px;
       padding: 15px;
       background-color: #f9f9f9;
+      position: relative;
+    }
+.buses1:hover{
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
 }
 .semi{
       font-size: small;
 }
 .view-seats{
-      width: 70%;
+      width: fit-content;
       font-size:small;
+      font-weight: bold;
       border: none;
+      padding: 10px;
       background-color:  #d84e55;
-      margin-left: 73px;
       position: relative;
-      top: 121px;
+      top: 100px;
 }
 .seat-container {
       display: flex;
@@ -42,145 +47,131 @@
       height: 25px;
       border-radius: 5px;
     }
-    
-
 .seat-legend{
       margin-left: 500px ;
 } 
 .seats-available{
-  margin-top: -25px !important;
+ position: absolute;
+ right: 0px;
+ top: 10px;
 }
 .bus-summary{
   border: none !important;
   background-color: white !important;
+  box-shadow: none !important;
 }
 .seat-1-container{
   display: flex;
 }
-@media screen and (max-width:450px) {
+@media screen and (max-width:769px){
   .buses1{
-    margin-left: 0px;
-    height: auto;
-    width: auto;
+    margin: 0 auto;
   }
+}
+@media screen and (max-width:767px) {
   .seats-available{
-    margin-top: 10px !important;
-  }
-  .view-seats{
-    top: 160px;
-    width: auto;
-    left: 135px;
-  }
-  .seat-container {
-    transform: rotate(0deg);
-    margin-left: -15px;
-    height: auto;
-  }
-  .seat-1-container{
-    display: block;
-  }
-  .seat-legend{
-    margin-left: 30px;
-    margin-top: 25px;
-  }
+    top: 110px;
+   }
 }
-
-@media screen and (max-width:376px) {
-  .view-seats{
-    left: 110px;
-  }
-}
-@media screen and (max-width:321px) {
-
-  .buses1{
-    margin-left: 10px;
-  }
-  .view-seats{
-    left: 75px;
-  }
-}
-.semi,.media-busname,.media-duration,.media-arrival,.media-fare,.media-seats-available,.media-departure{
-  margin-left: .5rem;
-}
-
-
-@media screen and (max-width:770px) and (min-width:451px) {
-  .bus-summary{
-    width: auto !important;
-    /* margin-left: 124px !important; */
-  }
-  .media-buses1{
-    width: 86%;
-    margin-left: 10px;
+@media screen and (max-width:331px) {
+  .media-arrival{
     position: relative;
-    left: 2px;
-    box-sizing: initial !important;
+    top: 20px;
   }
-  .media-busname{
-    margin-left: auto;
-  }
-  h4{
-    width: 90%;
-    margin-left: 53px;
-  }
-  .media-semi{
-    margin-left: -45px;
-  }
-  .seats-available{
-    position: relative;
-    left: 40px;
-    width: fit-content !important;
-  }
-  .bus-summary{
-    margin-left: 125px;
-  }
-  .media-duration{
-    margin-left: -85px !important;
+  .view-seats{
+    top: 120px;
   }
   .media-arrival{
-    margin-left: -175px !important;
+    top: auto;
   }
-  .media-fare{
-    margin-left: 340px;
+  .media-arrival-1{
     position: relative;
-    top: -24px;
-  }
-  .media-seats-available{
-    margin-left: 235px;
-    position: relative;
-    top: -24px;
-  }
-  .media-seats-available1{
-    margin-left: 235px;
-  }
-  .media-departure{
-    margin-left: 8px;
-  }
-  .view-seats{
-    width: 100px;
-    left: -70px;
-  }
-  .seat-container{
-    position: relative;
-    left: 175px;
-  }
-  .seat-legend{
-    margin-left: 395px;
+    top: 20px;
   }
 }
-@media screen and (max-width:1025px) and (min-width:770px){
-  .view-seats{
-    left: -22px;
-  }
-  .seat-container{
-    margin-left: 0px;
-  }
-  .seat-legend{
-    margin-left: 260px;
+@media screen and (min-width:1024px) {
+  .seat-1-container{
+    display: block;
+    width: auto;
   }
 }
-@media screen and (max-width:1441px) and (min-width:1026px){
-  .view-seats{
-    left: -5px;
+@media screen and (max-width:775px) {
+  .seat-1-container{
+    display: block;
+    width: auto;
   }
+  .seat-container {
+    display: inline-block;
+    align-items: center;
+    transform: rotate(0deg);
+    transform-origin: center;
+    height: 380px;
+    margin-left: 100px;
+  }
+  .seat{
+    width: 18% !important;
+  }
+}
+@media screen and (max-width:620px) {
+
+  .seat-legend{
+    top: 600px !important;
+    right: 150px !important;
+  }
+  .seat-1-container{
+    width: 110%;
+    text-align: center;
+    height: 750px;
+    
+  }
+}
+@media screen and (max-width:424px) {
+
+  .seat-legend{
+    top: 600px !important;
+    right: 100px !important;
+  }
+  .seat-1-container{
+    width: 110%;
+    text-align: center;
+    height: 750px;
+    
+  }
+}
+@media screen and (max-width:352px) {
+
+  .seat-legend{
+    top: 600px !important;
+    right: 80px !important;
+  }
+  .seat-1-container{
+    width: 120%;
+    text-align: center;
+    height: 750px;
+    
+  }
+}
+@media screen and (max-width:352px) {
+
+  /* .seat-legend{
+    top: 600px !important;
+    right: 80px !important;
+  } */
+  .seat-1-container{
+    width: 130%;
+    text-align: center;
+    height: 750px;
+    margin-left: 0px !important;
+    left: -95px !important;
+    
+  }
+}
+.seat-1-container{
+  position: relative;
+  left: -80px;
+}
+.seat-legend{
+  position: absolute;
+  right: -5px;
+  top: 10px;
 }

@@ -5,9 +5,10 @@ import Cancel from './Cancel';
 import Home from './Home';
 import Buspage from './Buspage';
 import ChangeDate from './ChangeDate';
-import ShowTickets from './ShowTickets'
 import BoardingPage from './BoardingPage';
 import NavBar from './NavBar';
+import Email from './Email';
+import Show from './Show';
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
           <Route path="/help" element={<Help />} />
           <Route path="/cancel-ticket" element={<Cancel />} />
           <Route path="/change-travel-date" element={<ChangeDate />} />
-          <Route path="/show-my-ticket" element={<ShowTickets />} />
+          <Route path="/email" element={<Email />} />
+          <Route path="/show-my-ticket" element={<Show />} />
           <Route path="/Buspage/" element={<Buspage />}>
             <Route path="boarding" element={<BoardingPage />} />
           </Route>
