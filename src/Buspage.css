@@ -151,7 +151,7 @@
     width: 120%;
     text-align: center;
     height: 750px;
-    
+    margin-left: -10px;
   }
 }
 @media screen and (max-width:326px) {
