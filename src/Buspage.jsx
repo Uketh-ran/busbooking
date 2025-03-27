@@ -138,9 +138,9 @@ const Buspage = () => {
   const availableSeats = totalSeats - bookedSeats.length;
 
   return (
-    <div>
-      <Container fluid className='mt-5'>
-        <h4 className="text-center mb-4">
+    <div className='bg-bus-page'>
+      <Container fluid className='mt-2'>
+        <h4 className="text-center mb-4 pt-2">
           {from} → {to} ({formattedDate})
         </h4>
 
@@ -184,7 +184,7 @@ const Buspage = () => {
 
             return (
               <React.Fragment key={bus.id}>
-                <div className='buses1 media-buses1 mb-5 p-3'>
+                <div className='buses1 media-buses1 mx-auto mb-5 p-3'>
                   <Row>
                     <Col xs={6} md={2}><span className='text-dark fw-bold media-busname mx-auto'>{bus.name}</span></Col>
                     <Col xs={6} md={2}>
@@ -231,7 +231,7 @@ const Buspage = () => {
 
                 {/* Seat Selection Section */}
                 {selectedBus === bus.id && (
-                  <div className="seat-selection mb-5 p-4 border">
+                  <div className="seat-selection mb-5 mx-auto p-4">
                     <h5 className="text-center">Select Your Seats in {bus.name}</h5>
 
                     <div className=" seat-1-container justify-content-center">

@@ -35,7 +35,7 @@ const CustomNavbar = () => {
 
           {/* Right Side - Help, Language, Account */}
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+          <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end helps">
             <Nav className="right-options">
               <Nav.Link href="/help" className="nav-item text-dark hea-text">
                 <LiaHeadsetSolid className="nav-icon" /> Help

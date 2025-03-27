@@ -1,0 +1,28 @@
+.homefaq-btn{
+    border: none;
+    background: none;
+    margin-right: 20px;
+}
+.homefaq-btn.active {
+    color: #d84e55;
+    border-bottom: 2px solid  #d84e55;
+}
+.bg-ques-home-faq{
+    border: 1px solid rgba(128, 128, 128, 0.495);
+    border-radius: 20px;
+}
+.bg-ques-home-faq.active {
+    background-color: rgb(234, 237, 247) ;
+}
+.question-home-faq{
+    width: 100%;
+    text-align: left;
+    position: relative;
+    border-radius: 20px;
+    border: none;
+    background-color: transparent;
+}
+.plus-minus{
+    position: absolute;
+    right: 30px;
+}

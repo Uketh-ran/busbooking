@@ -1,0 +1,35 @@
+.flag-container {
+    text-align: center;
+  }
+.countryname{
+   font-size: large;
+    padding: 10px;
+    border-radius: 40px;
+}
+.countryname:hover{
+     background-color: rgba(186, 187, 187, 0.527);}
+
+  .flag-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 80px;  /* Increased space between flags */
+    margin-top: 20px; /* Added some space above flags */
+  }
+  
+  .flag-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 16px;
+  }
+  
+  .flag-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  }
+  

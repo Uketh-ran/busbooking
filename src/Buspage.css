@@ -1,3 +1,6 @@
+.bg-bus-page {
+  background: linear-gradient(to bottom, #e5e6e6d3, #fffffff2);
+}
 .buses1{
       border: 1px solid rgba(202, 198, 198, 0.768);
       width: 85%;
@@ -57,7 +60,7 @@
 }
 .bus-summary{
   border: none !important;
-  background-color: white !important;
+  background-color: transparent !important;
   box-shadow: none !important;
 }
 .seat-1-container{
@@ -125,24 +128,24 @@
     
   }
 }
-@media screen and (max-width:424px) {
+@media screen and (max-width:426px) {
 
   .seat-legend{
     top: 600px !important;
-    right: 100px !important;
+    right: 175px !important;
   }
   .seat-1-container{
     width: 110%;
     text-align: center;
     height: 750px;
-    
+    margin-left: 4px;
   }
 }
-@media screen and (max-width:352px) {
+@media screen and (max-width:376px) {
 
   .seat-legend{
     top: 600px !important;
-    right: 80px !important;
+    right: 150px !important;
   }
   .seat-1-container{
     width: 120%;
@@ -151,18 +154,18 @@
     
   }
 }
-@media screen and (max-width:352px) {
+@media screen and (max-width:326px) {
 
-  /* .seat-legend{
+  .seat-legend{
     top: 600px !important;
-    right: 80px !important;
-  } */
+    right: 115px !important;
+  }
   .seat-1-container{
     width: 130%;
     text-align: center;
     height: 750px;
     margin-left: 0px !important;
-    left: -95px !important;
+    left: -100px !important;
     
   }
 }

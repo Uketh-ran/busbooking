@@ -9,6 +9,7 @@ import BoardingPage from './BoardingPage';
 import NavBar from './NavBar';
 import Email from './Email';
 import Show from './Show';
+import ViewOffer from "./Viewoffer"
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/view-offer" element={<ViewOffer />} />
           <Route path="/help" element={<Help />} />
           <Route path="/cancel-ticket" element={<Cancel />} />
           <Route path="/change-travel-date" element={<ChangeDate />} />

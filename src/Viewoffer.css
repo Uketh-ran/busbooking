@@ -1,0 +1,56 @@
+.viewoffer-bg {
+    background: linear-gradient(to bottom, #d3d1d139, #f5f3f6); 
+}
+.offer-card {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 5px 0 rgba(0,0,0,.75);
+    overflow: hidden;
+    text-align: center;
+    height: 280px !important;
+    transition: transform 0.2s ease-in-out;
+    position: relative;
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-9px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.offer-card:hover {
+    animation: bounce 1s;
+    box-shadow: 0 10px 5px 0 rgba(0, 0, 0, .75);
+}
+
+.offer-img {
+    height: 160px;
+    padding: 10px;
+    background: #fff;
+}
+
+.offer-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #333;
+    margin-top: 10px;
+}
+
+.offer-code {
+    font-size: 0.9rem;
+    color: gray;
+    margin-top: 5px; 
+    position: absolute;
+    right: 15px;
+    bottom: 10px;
+}
+
+.offer-code span {
+    font-weight: bold;
+}
