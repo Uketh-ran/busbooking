@@ -113,13 +113,108 @@
 
 // export default BoardingPage;
 
+// import React, { useState } from "react";
+// import { useLocation } from "react-router-dom";
+// import { Tabs, Tab, Form } from "react-bootstrap";
+// import "./Boarding.css";
+
+// const BoardingPage = () => {
+//   const location = useLocation();
+//   const { bus, selectedSeats } = location.state || {};
+//   const [selectedBoarding, setSelectedBoarding] = useState(null);
+//   const [selectedDropping, setSelectedDropping] = useState(null);
+
+//   if (!bus) {
+//     return <p>Loading bus details...</p>;
+//   }
+
+//   return (
+//     <div className="boarding-overlay">
+//       <div className="mt-4 boarding">
+//         <h5 className="text-center">Select the boarding and dropping point</h5>
+//         <hr />
+
+//         <Tabs defaultActiveKey="boarding" className="mb-3">
+//           {/* Boarding Point Tab */}
+//           <Tab eventKey="boarding" title={<span style={{ color: "red" }}>BOARDING POINT</span>}>
+//             {bus.boardingPoints.map((point, index) => (
+//               <div key={index} className="p-3 border-bottom">
+//                 <Form.Check
+//                   type="radio"
+//                   name="boardingPoint"
+//                   id={`boarding-${index}`}
+//                   label={
+//                     <div>
+//                       <strong>{point.time}</strong> {point.name}
+//                       <br />
+//                       <span className="text-muted">Landmark: {point.name}</span>
+//                     </div>
+//                   }
+//                   onChange={() => setSelectedBoarding(point)}
+//                 />
+//               </div>
+//             ))}
+//           </Tab>
+
+//           {/* Dropping Point Tab */}
+//           <Tab eventKey="dropping" title="DROPPING POINT">
+//             {bus.droppingPoints.map((point, index) => (
+//               <div key={index} className="p-3 border-bottom">
+//                 <Form.Check
+//                   type="radio"
+//                   name="droppingPoint"
+//                   id={`dropping-${index}`}
+//                   label={
+//                     <div>
+//                       <strong>{point.time}</strong> {point.name}
+//                       <br />
+//                       <span className="text-muted">Landmark: {point.name}</span>
+//                     </div>
+//                   }
+//                   onChange={() => setSelectedDropping(point)}
+//                 />
+//               </div>
+//             ))}
+//           </Tab>
+//         </Tabs>
+
+//         {/* Price Summary */}
+//         <div className="d-flex justify-content-between p-3 border-top">
+//           <span>Amount <small className="text-muted">( Taxes will be calculated during payment )</small></span>
+//           <strong>INR {bus.price * selectedSeats.length}.00</strong>
+//         </div>
+
+//         {/* Proceed Button */}
+//         <div className="text-center mt-3">
+//           <button
+//             className="btn btn-success"
+//             disabled={!selectedBoarding || !selectedDropping}
+//             onClick={() => {
+//               console.log("Boarding:", selectedBoarding);
+//               console.log("Dropping:", selectedDropping);
+//               // Navigate to payment or next step here
+//             }}
+//           >
+//             Proceed
+//           </button>
+//         </div>
+//       </div>
+//     </div>
+//   );
+
+// };
+
+// export default BoardingPage;
+
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
-import {  Tabs, Tab, Form } from "react-bootstrap";
+import { useLocation, useNavigate } from "react-router-dom"; // ✅ Step 1
+import { Tabs, Tab, Form } from "react-bootstrap";
 import "./Boarding.css";
 
 const BoardingPage = () => {
   const location = useLocation();
+  const navigate = useNavigate(); // ✅ Step 2
+
   const { bus, selectedSeats } = location.state || {};
   const [selectedBoarding, setSelectedBoarding] = useState(null);
   const [selectedDropping, setSelectedDropping] = useState(null);
@@ -183,10 +278,29 @@ const BoardingPage = () => {
           <span>Amount <small className="text-muted">( Taxes will be calculated during payment )</small></span>
           <strong>INR {bus.price * selectedSeats.length}.00</strong>
         </div>
+
+        {/* Proceed Button */}
+        <div className="text-center mt-3">
+          <button
+            className="btn btn-success"
+            disabled={!selectedBoarding || !selectedDropping}
+            onClick={() => {
+              navigate("/payment", {
+                state: {
+                  bus,
+                  selectedSeats,
+                  selectedBoarding,
+                  selectedDropping,
+                },
+              });
+            }}
+          >
+            Proceed
+          </button>
+        </div>
       </div>
     </div>
   );
-
 };
 
 export default BoardingPage;

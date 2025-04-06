@@ -10,6 +10,7 @@ import NavBar from './NavBar';
 import Email from './Email';
 import Show from './Show';
 import ViewOffer from "./Viewoffer"
+import PaymentPage from './PaymentPage';
 
 function App() {
   return (
@@ -27,6 +28,8 @@ function App() {
           <Route path="/Buspage/" element={<Buspage />}>
             <Route path="boarding" element={<BoardingPage />} />
           </Route>
+          <Route path="/payment" element={<PaymentPage />} />
+
         </Routes>
       </Router>
     </div>
