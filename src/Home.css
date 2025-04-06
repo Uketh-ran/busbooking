@@ -171,16 +171,11 @@ h1 {
     .gobutton {
         left: -100px;
     }
-    .search-button{
-        left: 21px;
-        top: 32px;
-    }
 }
 
 @media screen and (max-width: 768px) and (min-width:451px) {
     .search-button {
-        left: 21px;
-        top: 32px;
+        left: 15px;
     }
     .fromdiv{
         width: 45%;
@@ -241,8 +236,7 @@ h1 {
         height: 700px;
     }
     .search-button{
-        left: 30px;
-        top: 33px;
+        left: 35px;
     }
     .searchdiv{
         display: block;
@@ -261,7 +255,7 @@ h1 {
 
 @media screen and (max-width: 321px) {
     .datepicker-input{
-        left: -74px;
+        left: -72px;
     }
 }
 
