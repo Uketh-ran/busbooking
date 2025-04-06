@@ -34,8 +34,8 @@
     padding-right: 0px;
     color: white;
     height: auto;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .carousel-content {
@@ -51,6 +51,10 @@
         height: 195px;
         width: 100%;
     }
+    .leftbg,
+    .rightbg{
+        top: 75px !important;
+    }
 }
 @media screen and (max-width:326px) {
     .carousel-content{
@@ -59,6 +63,10 @@
     }
     .carousel-item{
         padding: 0px;
+    }
+    .leftbg,
+    .rightbg{
+        top: 75px !important;
     }
 }
 .carousel-img {
@@ -90,15 +98,49 @@
 }
 .buttonbg{
     font-size: 30px;
-    border-radius: 50% !important;
-    background-color: rgb(255, 255, 255) !important;
+}
+.leftbg{
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgb(224, 224, 224);
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 10px;
+    border-radius: 32px;
+    background: rgb(255, 255, 255);
+    cursor: pointer;
+    left: 5px;
+    top: 50px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+.rightbg{
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgb(224, 224, 224);
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 10px;
+    border-radius: 32px;
+    background: rgb(255, 255, 255);
+    cursor: pointer;
+    right: 5px;
+    top: 50px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
 }
 .carousel-btn {
+    -webkit-box-align: center;
+    align-items: center;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     color: black !important;
-    width: 40px;
+    width: 100px;
     height: 100%;
     border: none !important;
     font-size: 18px;
@@ -110,13 +152,14 @@
 }
 .left {
     left: -20px;
-    background: linear-gradient(to left, rgba(208, 208, 208, 0.516), white) !important;
+    background: linear-gradient(270deg, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 100%) !important;
     z-index: 999; 
 }
 
 .right {
     right: -20px;
-    background: linear-gradient(to right, rgba(208, 208, 208, 0.516), white) !important;
+    background: linear-gradient(270deg, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0) 100%) !important;
+    background-color: aqua;
 }
 .primo-img{
     border-radius: 50px;

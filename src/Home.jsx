@@ -72,27 +72,31 @@ const Home = () => {
         <Row className="justify-content-center align-items-center mt-5">
           <Col lg={12} md={6} className="text-center">
             <div className='mediaform'>
-              <IoBusOutline className='bus1 cursor-pointer media-bus-from media375' />
-              <span className='from-text cursor-pointer media-from '>From</span>
-              <input
-                type="text"
-                className='from input-mediafrom cursor-pointer'
-                value={fromLocation}
-                onChange={(e) => setFromLocation(e.target.value)}
-              />
+              <div className='fromdiv'>
+                <IoBusOutline className='bus1 cursor-pointer media-bus-from media375' />
+                <span className='from-text cursor-pointer media-from '>From</span>
+                <input
+                  type="text"
+                  className='from input-mediafrom cursor-pointer'
+                  value={fromLocation}
+                  onChange={(e) => setFromLocation(e.target.value)}
+                />
+              </div>
+              <div className='todiv'>
+              <div className='godiv'>
+                <button className='gobutton mediachange-button' onClick={swapLocations}><GoArrowSwitch /></button>
+              </div>
+                <IoBusOutline className='bus2 cursor-pointer' />
+                <span className='from-text to-text cursor-pointer media-to'>To</span>
+                <input
+                  type="text"
+                  className='to cursor-pointer '
+                  value={toLocation}
+                  onChange={(e) => setToLocation(e.target.value)}
+                />
+              </div>
+              <div className='datediv'>
 
-              <button className='gobutton mediachange-button' onClick={swapLocations}><GoArrowSwitch /></button>
-
-              <IoBusOutline className='bus2 cursor-pointer' />
-              <span className='from-text to-text cursor-pointer media-to'>To</span>
-              <input
-                type="text"
-                className='to cursor-pointer '
-                value={toLocation}
-                onChange={(e) => setToLocation(e.target.value)}
-              />
-
-              <button className='date-button'>
                 <HiOutlineCalendarDateRange className="date_icon me-2" />
                 <span className=' date-text'>Date</span>
                 <DatePicker
@@ -104,16 +108,19 @@ const Home = () => {
                   showYearDropdown
                   scrollableMonthYearDropdown
                 />
-              </button>
-              <button className='search-button fw-bold media-search' onClick={handleSearch}>SEARCH BUSES</button>
+
+              </div>
+              <div className='searchdiv'>
+                <button className='search-button fw-bold media-search' onClick={handleSearch}>SEARCH BUSES</button>
+              </div>
             </div>
           </Col>
         </Row>
       </Container>
       <Corsl />
       <Primo />
-      <Flag/>
-      <Faqsec/>
+      <Flag />
+      <Faqsec />
       <Copy />
     </div>
   );

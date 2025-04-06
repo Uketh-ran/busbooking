@@ -37,7 +37,7 @@ const CustomNavbar = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end helps">
             <Nav className="right-options">
-              <Nav.Link href="/help" className="nav-item text-dark hea-text">
+              <Nav.Link as={Link}  to="/help" className="nav-item text-dark hea-text">
                 <LiaHeadsetSolid className="nav-icon" /> Help
               </Nav.Link>
               <Dropdown className="nav-item">

@@ -68,12 +68,12 @@ const carouselItems = [
 
 const CustomPrevArrow = (props) => {
     const { onClick } = props;
-    return <Button className="carousel-btn left" onClick={onClick}> <span className="buttonbg">&#10094; </span></Button>;
+    return <Button className="carousel-btn left" onClick={onClick}> <span className="buttonbg leftbg">&#10094; </span></Button>;
 };
 
 const CustomNextArrow = (props) => {
     const { onClick } = props;
-    return <Button className="carousel-btn right" onClick={onClick}> <span className="buttonbg">&#10095;</span></Button>;
+    return <Button className="carousel-btn right" onClick={onClick}> <span className="buttonbg rightbg">&#10095;</span></Button>;
 };
 
 
@@ -81,9 +81,9 @@ const CustomNextArrow = (props) => {
 const Corsl = () => {
     const settings = {
         dots: false,
-        infinite: true,
+        infinite: false,
         speed: 900,
-        slidesToShow: 3,  // Show 3 full slides + part of next
+        slidesToShow: 3.3,  // Show 3 full slides + part of next
         slidesToScroll: 3,   // Scroll one slide at a time
         nextArrow: <CustomNextArrow />,
         prevArrow: <CustomPrevArrow />,

@@ -110,29 +110,52 @@ const Buspage = () => {
   const maleSeats = [3, 6, 19]; // Predefined male seats
   const femaleSeats = [12, 24, 33]; // Predefined female seats
 
-  const handleSeatSelection = (seatNumber, selectedBus) => {
+  // const handleSeatSelection = (seatNumber, selectedBus) => {
+  //   setSelectedSeats((prevSeats) => {
+  //     let updatedSeats;
+      
+  //     if (prevSeats.includes(seatNumber)) {
+  //       // Unselect seat
+  //       updatedSeats = prevSeats.filter(seat => seat !== seatNumber);
+  //     } else {
+  //       // Select seat
+  //       updatedSeats = [...prevSeats, seatNumber];
+  //     }
+  //     // If no seats are selected, go back to the bus page
+  //     if (updatedSeats.length === 0) {
+  //       navigate(-1);
+  //     } else {
+  //       // Otherwise, navigate to the boarding page
+  //       navigate("boarding", {
+  //         state: { bus: selectedBus, selectedSeats: updatedSeats, from, to, date }
+  //       });
+  //     }
+  //     return updatedSeats;
+  //   });
+  // };
+  
+  const handleSeatSelection = (seatNumber, bus) => {
     setSelectedSeats((prevSeats) => {
       let updatedSeats;
-      
+  
       if (prevSeats.includes(seatNumber)) {
-        // Unselect seat
         updatedSeats = prevSeats.filter(seat => seat !== seatNumber);
       } else {
-        // Select seat
         updatedSeats = [...prevSeats, seatNumber];
       }
-      // If no seats are selected, go back to the bus page
+  
       if (updatedSeats.length === 0) {
-        navigate(-1);
+        navigate(-1); // Go back to hide the boarding page
       } else {
-        // Otherwise, navigate to the boarding page
         navigate("boarding", {
-          state: { bus: selectedBus, selectedSeats: updatedSeats, from, to, date }
+          state: { bus, selectedSeats: updatedSeats, from, to, date }
         });
       }
+  
       return updatedSeats;
     });
   };
+  
 
   const totalSeats = 40; // Assuming each bus has 40 seats
   const availableSeats = totalSeats - bookedSeats.length;

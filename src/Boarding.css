@@ -1,4 +1,21 @@
-.boarding{
-    width: auto;
-    background-color: blue;
-}
+/* .boarding{
+    width: 40%;
+    background-color: white;
+    position: absolute;
+    right: 0px;
+    top: 150px;
+    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.5);
+} */
+.boarding {
+    position: fixed ;
+    top: 150px ;
+    right: 0 ;
+    width: 40% ;
+    height: 50% ;
+    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.5) ;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    z-index: 1000;
+  }
+  
