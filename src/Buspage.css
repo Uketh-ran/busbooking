@@ -31,8 +31,10 @@
       align-items: center;
       transform: rotate(270deg);
       transform-origin: center;
-      height: 380px;
-      margin-left: -200px;
+      height: 180px;
+      margin-left: -300px;
+      margin-top: 100px;
+      margin-bottom: 100px;
     }
     
     .seat {
@@ -97,6 +99,7 @@
     display: block;
     width: auto;
   }
+
 }
 @media screen and (max-width:775px) {
   .seat-1-container{
@@ -108,11 +111,15 @@
     align-items: center;
     transform: rotate(0deg);
     transform-origin: center;
-    height: 380px;
     margin-left: 100px;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
   .seat{
     width: 18% !important;
+  }
+  .seat-legend{
+    right: 10px !important;
   }
 }
 @media screen and (max-width:620px) {
@@ -174,6 +181,23 @@
 }
 .seat-legend{
   position: absolute;
-  right: -5px;
+  right: 180px;
   top: 10px;
+}
+@media screen and (max-width: 1024px) and (min-width:769px) {
+  .seat-legend{
+    right: 25px;
+  }
+}
+.proceed-btn{
+  background-color: #d84e55 !important;
+  border: none !important;
+  color: white;
+  border-radius: 5px;
+  width: auto;
+}
+.booked-seat {
+  background-color: #6c757d !important; /* Bootstrap "secondary" grey */
+  /* border: 1px solid #6c757d !important; */
+  pointer-events: none; /* Prevent clicking */
 }

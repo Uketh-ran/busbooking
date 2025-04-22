@@ -1,76 +1,32 @@
-import React, { useState } from 'react';
-import { useLocation, Outlet,useNavigate } from 'react-router-dom';
+
+import React, { useEffect, useState, useMemo } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import { IoIosArrowRoundUp, IoIosArrowRoundDown } from "react-icons/io";
 import { BiCctv } from "react-icons/bi";
 import { PiPlugCharging } from "react-icons/pi";
 import './Buspage.css';
 import { format, addDays, parse } from 'date-fns';
-import { IoIosArrowRoundUp } from "react-icons/io";
-import { IoIosArrowRoundDown } from "react-icons/io";
-import Copy from "./Copy"
-
-const allBuses = [
-  {
-    id: 1, name: "ABC Travels", sp: "Chathiram", ep: "Killambakkam",
-    from: "Trichy", to: "Chennai", departure: "06:00 AM", arrival: "12:00 PM",
-    duration: "06h 00m", price: 500, type: "Semi Sleeper (2+2)",
-    boardingPoints: [
-      { id: 1, name: "Chathiram Bus Stand", time: "06:00 AM" },
-      { id: 2, name: "Tollgate", time: "06:15 AM" }
-    ],
-    droppingPoints: [
-      { id: 1, name: "Guduvanchery", time: "11:50 AM" },
-      { id: 2, name: "Killambakkam", time: "12:00 PM" },
-    ],
-  },
-  {
-    id: 2, name: "ABC Travels", sp: "Killambakkam", ep: "Chathiram",
-    from: "Chennai", to: "Trichy", departure: "06:00 AM", arrival: "12:00 PM",
-    duration: "06h 00m", price: 600, type: "Semi Sleeper (2+2)",
-    boardingPoints: [
-      { id: 1, name: "Killambakkam", time: "06:00 AM" },
-      { id: 2, name: "Guduvanchery", time: "06:10 AM" },
-    ],
-    droppingPoints: [
-      { id: 1, name: "Tollgate", time: "11:50 AM" },
-      { id: 2, name: "Chathiram Bus Stand", time: "12:00 PM" }
-    ],
-  },
-  {
-    id: 3, name: "Royal Travels", sp: "Central Bus Stand", ep: "Killambakkam",
-    from: "Trichy", to: "Chennai", departure: "10:00 PM", arrival: "04:00 AM",
-    duration: "06h 00m", price: 900, type: "Semi Sleeper (2+2)",
-    boardingPoints: [
-      { id: 1, name: "Central Bus Stand", time: "10:00 PM" },
-      { id: 2, name: "Tollgate", time: "10:20 PM" }
-    ],
-    droppingPoints: [
-      { id: 1, name: "SRM", time: "03:50 AM" },
-      { id: 2, name: "Killambakkam Bus Stand", time: "04:00 AM" }
-    ],
-  },
-  {
-    id: 4, name: "Royal Travels", sp: "Killambakkam", ep: "Chathiram Bus Stand",
-    from: "Chennai", to: "Trichy", departure: "10:00 PM", arrival: "04:00 AM",
-    duration: "06h 00m", price: 900, type: "Semi Sleeper (2+2)",
-    boardingPoints: [
-      { id: 1, name: "Killambakkam", time: "10:00 PM" },
-      { id: 2, name: "SRM", time: "10:20 PM" }
-    ],
-    droppingPoints: [
-      { id: 1, name: "Tollgate", time: "03:40 AM" },
-      { id: 2, name: "Central Bus Stand", time: "04:00 AM" }
-    ],
-  },
-];
+import Copy from "./Copy";
+import { Outlet } from "react-router-dom";
 
 const Buspage = () => {
   const location = useLocation();
-  const { from, to, date } = location.state || {};
-  const [selectedBus, setSelectedBus] = useState(null);
-  const [selectedSeats, setSelectedSeats] = useState([]);
-  const [sortConfig, setSortConfig] = useState({ key: null, ascending: true });
   const navigate = useNavigate();
+
+  const from = location.state?.from || '';
+  const to = location.state?.to || '';
+  const date = useMemo(() => location.state?.date || new Date(), [location.state?.date]);
+
+  const [busList, setBusList] = useState([]);
+  const [selectedBus, setSelectedBus] = useState(null);
+  const [selectedSeats, setSelectedSeats] = useState({});
+
+  const [sortConfig, setSortConfig] = useState({ key: null, ascending: true });
+  const bookedSeats = [3, 5, 9];
+  const maleSeats = [2, 6];
+  const femaleSeats = [4, 8];
+
 
   const handleSort = (key) => {
     setSortConfig((prev) => ({
@@ -79,160 +35,113 @@ const Buspage = () => {
     }));
   };
 
-  if (!from || !to || !date) {
-    return <h3 className="text-center text-danger">Invalid search data. Please go back and try again.</h3>;
-  }
+  useEffect(() => {
+    fetch('http://localhost:5001/api/bus')
+      .then(res => res.json())
+      .then(data => {
+        const filteredBuses = data.filter(bus =>
+          bus.from.toLowerCase() === from.toLowerCase() &&
+          bus.to.toLowerCase() === to.toLowerCase() &&
+          format(new Date(bus.dateOfDeparture), 'yyyy-MM-dd') === format(new Date(date), 'yyyy-MM-dd')
+        );
+        setBusList(filteredBuses);
+      })
+      .catch(err => console.error('Error fetching buses:', err));
+  }, [from, to, date]);
 
-  const selectedDate = new Date(date);
-  const formattedDate = format(selectedDate, "dd/MM/yyyy");
+  const travelDate = new Date(date);
+  const formattedDate = format(travelDate, 'dd/MM/yyyy');
 
-  const filteredBuses = allBuses.filter(
-    bus => bus.from.toLowerCase() === from.toLowerCase() && bus.to.toLowerCase() === to.toLowerCase()
-  );
-  
-  const sortedBuses = [...filteredBuses].sort((a, b) => {
-    if (!sortConfig.key) return 0; // No sorting initially
-    let aValue = a[sortConfig.key];
-    let bValue = b[sortConfig.key];
-  
-    if (sortConfig.key === 'departure' || sortConfig.key === 'arrival') {
-      aValue = parse(aValue, 'hh:mm a', new Date());
-      bValue = parse(bValue, 'hh:mm a', new Date());
-    } else if (sortConfig.key === 'price') {
-      aValue = Number(aValue);
-      bValue = Number(bValue);
-    }
-  
-    return sortConfig.ascending ? aValue - bValue : bValue - aValue;
-  });
-
-  const bookedSeats = [10, 15, 26, 38]; // Predefined booked seats
-  const maleSeats = [3, 6, 19]; // Predefined male seats
-  const femaleSeats = [12, 24, 33]; // Predefined female seats
-
-  // const handleSeatSelection = (seatNumber, selectedBus) => {
-  //   setSelectedSeats((prevSeats) => {
-  //     let updatedSeats;
-      
-  //     if (prevSeats.includes(seatNumber)) {
-  //       // Unselect seat
-  //       updatedSeats = prevSeats.filter(seat => seat !== seatNumber);
-  //     } else {
-  //       // Select seat
-  //       updatedSeats = [...prevSeats, seatNumber];
-  //     }
-  //     // If no seats are selected, go back to the bus page
-  //     if (updatedSeats.length === 0) {
-  //       navigate(-1);
-  //     } else {
-  //       // Otherwise, navigate to the boarding page
-  //       navigate("boarding", {
-  //         state: { bus: selectedBus, selectedSeats: updatedSeats, from, to, date }
-  //       });
-  //     }
-  //     return updatedSeats;
-  //   });
-  // };
-  
-  const handleSeatSelection = (seatNumber, bus) => {
+  const handleSeatSelection = (seatNumber, busId) => {
     setSelectedSeats((prevSeats) => {
-      let updatedSeats;
-  
-      if (prevSeats.includes(seatNumber)) {
-        updatedSeats = prevSeats.filter(seat => seat !== seatNumber);
-      } else {
-        updatedSeats = [...prevSeats, seatNumber];
-      }
-  
-      if (updatedSeats.length === 0) {
-        navigate(-1); // Go back to hide the boarding page
-      } else {
-        navigate("boarding", {
-          state: { bus, selectedSeats: updatedSeats, from, to, date }
-        });
-      }
-  
-      return updatedSeats;
+      const currentBusSeats = prevSeats[busId] || [];
+      const isSelected = currentBusSeats.includes(seatNumber);
+
+      return {
+        ...prevSeats,
+        [busId]: isSelected
+          ? currentBusSeats.filter(seat => seat !== seatNumber)
+          : [...currentBusSeats, seatNumber],
+      };
     });
   };
-  
 
-  const totalSeats = 40; // Assuming each bus has 40 seats
-  const availableSeats = totalSeats - bookedSeats.length;
 
   return (
     <div className='bg-bus-page'>
       <Container fluid className='mt-2'>
-        <h4 className="text-center mb-4 pt-2">
-          {from} → {to} ({formattedDate})
-        </h4>
+        <h4 className="text-center mb-4 pt-2">{from} → {to} ({formattedDate})</h4>
 
-        {/* Bus Summary Section */}
+        {/* Header Row */}
         <div className='buses1 bus-summary'>
           <Row>
-            <Col xs={6} md={2} ></Col>
-            <Col xs={6} md={2}  onClick={() => handleSort('departure')}>
+            <Col xs={6} md={2}></Col>
+            <Col xs={6} md={2} onClick={() => handleSort('departure')}>
               <span className='media-departure mx-auto'>
                 Departure {sortConfig.key === 'departure' && (sortConfig.ascending ? <IoIosArrowRoundUp /> : <IoIosArrowRoundDown />)}
               </span>
             </Col>
             <Col xs={6} md={2} onClick={() => handleSort('duration')}>
-              <span className=' media-duration mx-auto'>
-                Duration { sortConfig.key === 'duration' && (sortConfig.ascending ? <IoIosArrowRoundUp /> : <IoIosArrowRoundDown />)}
+              <span className='media-duration mx-auto'>
+                Duration {sortConfig.key === 'duration' && (sortConfig.ascending ? <IoIosArrowRoundUp /> : <IoIosArrowRoundDown />)}
               </span>
             </Col>
-            <Col xs={6} md={2}  onClick={() => handleSort('arrival')}>
-              <span className=' media-arrival mx-auto'>
+            <Col xs={6} md={2} onClick={() => handleSort('arrival')}>
+              <span className='media-arrival mx-auto'>
                 Arrival {sortConfig.key === 'arrival' && (sortConfig.ascending ? <IoIosArrowRoundUp /> : <IoIosArrowRoundDown />)}
               </span>
             </Col>
             <Col xs={6} md={2} onClick={() => handleSort('price')}>
               <span className='media-fare mx-auto'>
-                Fare {sortConfig.key === 'price' && (sortConfig.ascending ? <IoIosArrowRoundUp /> : <IoIosArrowRoundDown /> )}
+                Fare {sortConfig.key === 'price' && (sortConfig.ascending ? <IoIosArrowRoundUp /> : <IoIosArrowRoundDown />)}
               </span>
             </Col>
-
-            <Col xs={6} md={2} ><span className='media-seats-available mx-auto'>Seats <span className='media-seats-available1'>Available</span></span></Col>
+            <Col xs={6} md={2}><span className='media-seats-available mx-auto'>Seats Available</span></Col>
           </Row>
+
         </div>
 
-        {sortedBuses.length > 0 ? (
-          sortedBuses.map(bus => {
+        {/* Buses List */}
+        {busList.length > 0 ? (
+          busList.map((bus) => {
+            const busId = bus._id || bus.id;
+            let departureTime, arrivalTime;
+            let formattedDeparture = '-', formattedArrival = '-', formattedArrivalDate = formattedDate;
 
-            const departureTime = parse(bus.departure, "hh:mm a", new Date());
-            const arrivalTime = parse(bus.arrival, "hh:mm a", new Date());
-            const isNextDayArrival = arrivalTime < departureTime;
-            const arrivalDate = isNextDayArrival ? addDays(selectedDate, 1) : selectedDate;
-            const formattedArrivalDate = format(arrivalDate, "dd/MM/yyyy");
+            try {
+              departureTime = parse(bus.departureTime, "HH:mm", new Date());
+              formattedDeparture = format(departureTime, "HH:mm");
+
+              arrivalTime = parse(bus.arrivalTime, "HH:mm", new Date());
+              formattedArrival = format(arrivalTime, "HH:mm");
+
+              const isNextDayArrival = arrivalTime < departureTime;
+              formattedArrivalDate = isNextDayArrival ? format(addDays(travelDate, 1), "dd/MM/yyyy") : formattedDate;
+            } catch (err) {
+              console.warn(`Invalid time format in bus: ${bus.busName}`, err);
+            }
 
             return (
-              <React.Fragment key={bus.id}>
+              <React.Fragment key={busId}>
                 <div className='buses1 media-buses1 mx-auto mb-5 p-3'>
                   <Row>
-                    <Col xs={6} md={2}><span className='text-dark fw-bold media-busname mx-auto'>{bus.name}</span></Col>
+                    <Col xs={6} md={2}><span className='text-dark fw-bold media-busname mx-auto'>{bus.busName}</span></Col>
                     <Col xs={6} md={2}>
-                      <span className='text-dark fw-bold mx-auto '>{bus.departure}</span>
-                      <br />
+                      <span className='text-dark fw-bold mx-auto'>{formattedDeparture}</span><br />
                       <small className='mx-auto'>{formattedDate}</small>
                     </Col>
-                    <Col xs={6} md={2}><span className=''>{bus.duration}</span></Col>
+                    <Col xs={6} md={2}><span>{bus.duration}</span></Col>
                     <Col xs={6} md={2}>
-                      <span className='text-dark  fw-bold'>{bus.arrival}</span>
-                      <br />
-                      <small className={`mx-auto ${isNextDayArrival ? "text-danger" : ""}`}>
-                        {formattedArrivalDate}
-                      </small>
+                      <span className='text-dark fw-bold'>{formattedArrival}</span><br />
+                      <small className='mx-auto'>{formattedArrivalDate}</small>
                     </Col>
                     <Col xs={6} md={2}><span className='mx-auto'>INR <span className='text-dark fw-bold ms-1'>{bus.price}</span></span></Col>
                     <Col xs={6} md={2}>
                       <button
                         className='text-light view-seats mx-auto'
-                        onClick={() => {
-                          setSelectedBus(selectedBus === bus.id ? null : bus.id);
-                          setSelectedSeats([]);
-                        }}
+                        onClick={() => setSelectedBus(selectedBus === busId ? null : busId)} // 🔥 [UPDATED]
                       >
-                        {selectedBus === bus.id ? "HIDE SEATS" : "VIEW SEATS"}
+                        {selectedBus === busId ? "Hide Seats" : "View Seats"} {/* 🔥 [UPDATED] */}
                       </button>
                     </Col>
                   </Row>
@@ -242,8 +151,8 @@ const Buspage = () => {
                     <Col xs={6} md={2}><span className=' semi mx-auto '>{bus.ep}</span></Col>
                     <Col xs={6} md={2} className='seats-available mx-auto'>
                       <span className=' semi mx-auto'>
-                        Seats Available: {availableSeats} <br />
-                        <span className='mx-auto'>Total Seats: {totalSeats}</span>
+                        Seats Available: {bus.seatsAvailable} <br />
+                        <span className='mx-auto'>Total Seats: {bus.Totalseats}</span>
                       </span>
                     </Col>
                   </Row>
@@ -252,36 +161,31 @@ const Buspage = () => {
                   </Row>
                 </div>
 
-                {/* Seat Selection Section */}
-                {selectedBus === bus.id && (
+                {selectedBus === busId && (
                   <div className="seat-selection mb-5 mx-auto p-4">
-                    <h5 className="text-center">Select Your Seats in {bus.name}</h5>
-
-                    <div className=" seat-1-container justify-content-center">
-                      {/* Seat Container */}
+                    <h5 className="text-center">Select Your Seats in {bus.busName}</h5>
+                    <div className="seat-1-container justify-content-center">
                       <div className="seat-container align-items-center">
                         {[...Array(10)].map((_, rowIndex) => (
                           <Row key={rowIndex} className="bus-row justify-content-center">
                             {[1, 2, null, 3, 4].map((col, index) => {
-                              if (col === null) {
-                                return <Col xs={1} key={index}></Col>; // Space for the aisle
-                              }
+                              if (col === null) return <Col xs={1} key={index}></Col>;
 
                               const seatNumber = rowIndex * 4 + col;
                               const isBooked = bookedSeats.includes(seatNumber);
                               const isMale = maleSeats.includes(seatNumber);
                               const isFemale = femaleSeats.includes(seatNumber);
-                              const isSelected = selectedSeats.includes(seatNumber);
+                              const isSelected = (selectedSeats[busId] || []).includes(seatNumber);
 
                               return (
-                                <Col xs={6} md={2} key={seatNumber} className="seat">
+                                <Col xs={6} md={2} key={`${busId}-${seatNumber}`} className="seat">
                                   <Button
                                     variant={isBooked ? "secondary" : "outline-secondary"}
                                     className={`seats-btn 
-                                ${isSelected ? "bg-success text-white" : ""} 
-                                ${isMale ? "border-primary border-3" : ""} 
-                                ${isFemale ? "border-danger border-3" : ""}`}
-                                onClick={() => !isBooked && handleSeatSelection(seatNumber, bus)}
+              ${isSelected ? "bg-success text-white" : ""} 
+              ${isMale ? "border-primary border-3" : ""} 
+              ${isFemale ? "border-danger border-3" : ""}`}
+                                    onClick={() => !isBooked && handleSeatSelection(seatNumber, busId)}
                                   >
                                     {seatNumber}
                                   </Button>
@@ -290,10 +194,10 @@ const Buspage = () => {
                             })}
                           </Row>
                         ))}
-                      </div> 
 
-                      {/* Seat Legend */}
-                      <div className="seat-legend">
+                      </div>
+
+                      <div className="seat-legend mt-4">
                         <h6>Seat Legend</h6>
                         <div className="d-flex align-items-center mb-2">
                           <Button variant="outline-secondary" className="seat-box"></Button> <span className="ms-2">Available</span>
@@ -309,21 +213,34 @@ const Buspage = () => {
                         </div>
                       </div>
                     </div>
-                    
+
+                    <div className="text-center mt-4">
+                      <Button
+                        className='proceed-btn'
+                        disabled={!selectedSeats[busId] || selectedSeats[busId].length === 0}
+                        onClick={() => {
+                          navigate('boarding', {
+                            state: { bus, selectedSeats: selectedSeats[busId], from, to, date }
+                          });
+                        }}
+                      >
+                        Proceed
+                      </Button>
+
+                    </div>
                   </div>
                 )}
               </React.Fragment>
             );
           })
         ) : (
-          <h3 className="text-center text-danger">No buses available for this route.</h3>
+          <p>No buses available for the selected route and date.</p>
         )}
-        <Outlet />
       </Container>
-      <Copy/>
+      <Outlet />
+      <Copy />
     </div>
   );
 };
-
 export default Buspage;
 
