@@ -2,18 +2,21 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';  
 import * as Papa from 'papaparse';  
 
+
 // CSV Export
 export const exportCSV = (filteredBuses) => {
     const csv = Papa.unparse(filteredBuses.map(bus => ({
         BusName: bus.busName,
+        Type: bus.type,
         From: bus.from,
         To: bus.to,
-        DepartureDate: bus.dateOfDeparture,
-        ArrivalDate: bus.dateOfArrival,
-        DepartureTime: bus.departureTime,
-        ArrivalTime: bus.arrivalTime,
+        // DepartureDate: bus.dateOfDeparture,
+        // ArrivalDate: bus.dateOfArrival,
+        // DepartureTime: bus.departureTime,
+        // ArrivalTime: bus.arrivalTime,
         Price: bus.price,
-        TotalSeats: bus.Totalseats,
+        SeatsAvailable: bus.seatsAvailable,
+        // TotalSeats: bus.Totalseats,
         Status: bus.status ? "Enabled" : "Disabled"
     })));
 
@@ -25,14 +28,16 @@ export const exportCSV = (filteredBuses) => {
 export const exportExcel = (filteredBuses) => {
     const data = filteredBuses.map(bus => ({
         BusName: bus.busName,
+        Type: bus.type,
         From: bus.from,
         To: bus.to,
-        DepartureDate: bus.dateOfDeparture,
-        ArrivalDate: bus.dateOfArrival,
-        DepartureTime: bus.departureTime,
-        ArrivalTime: bus.arrivalTime,
+        // DepartureDate: bus.dateOfDeparture,
+        // ArrivalDate: bus.dateOfArrival,
+        // DepartureTime: bus.departureTime,
+        // ArrivalTime: bus.arrivalTime,
         Price: bus.price,
-        TotalSeats: bus.Totalseats,
+        SeatsAvailable: bus.seatsAvailable,
+        // TotalSeats: bus.Totalseats,
         Status: bus.status ? "Enabled" : "Disabled"
     }));
 

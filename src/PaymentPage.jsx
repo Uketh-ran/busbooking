@@ -9,9 +9,10 @@ const PaymentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { updateBookedSeats } = useBooking();
-  
+
 
   const { bus, selectedSeats } = location.state || {};
+  console.log("Bus Data:", bus);
 
   const {
     register,
@@ -42,11 +43,11 @@ const PaymentPage = () => {
       ...data,
       bus: {
         id: bus._id,
-        name: bus.name,
+        busName: bus.busName,   // Add this
+        from: bus.from,         // Add this
+        to: bus.to,
         price: bus.price,
-        origin: bus.origin,
-        destination: bus.destination,
-        date: bus.date,
+        dateOfDeparture: new Date(bus.dateOfDeparture),
       },
       selectedSeats,
       totalAmount: selectedSeats.length * bus.price,
@@ -72,13 +73,30 @@ const PaymentPage = () => {
     }
   };
 
-
-
   if (!bus || !selectedSeats) return <div>No booking data found</div>;
+
+  const formattedDepartureDate = bus.dateOfDeparture
+    ? new Date(bus.dateOfDeparture).toLocaleDateString("en-IN", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : "Date not available";
+
+    const formattedDepartureTime = bus.departureTime || "Time not available";
 
   return (
     <div className="bg-light py-4">
-      <Container className="bg-white p-4 rounded shadow">
+      <Container className="bg-white p-4 rounded shadow mb-5">
+        <div className="mb-4">
+          <h6 className="mb-1">Bus Information</h6>
+          <p className="mb-0">
+            <strong>{bus.busName}</strong> <br />
+            {bus.from} ➝ {bus.to} <br /> 
+            <strong>{formattedDepartureDate}</strong> at {formattedDepartureTime} <br />
+          </p>
+        </div>
         <h4 className="mb-4">Passenger Details</h4>
 
         <Form onSubmit={handleSubmit(onSubmit)}>
@@ -93,11 +111,7 @@ const PaymentPage = () => {
               {/* Name */}
               <Form.Group className="mb-2">
                 <Form.Label>Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter Name"
-                  {...register(`passengers.${index}.name`, { required: true })}
-                />
+                <Form.Control type="text" placeholder="Enter Name" {...register(`passengers.${index}.name`, { required: true })} />
                 {errors.passengers?.[index]?.name && (
                   <small className="text-danger">Name is required</small>
                 )}
@@ -108,20 +122,8 @@ const PaymentPage = () => {
                 <Form.Group>
                   <Form.Label>Gender</Form.Label>
                   <div>
-                    <Form.Check
-                      inline
-                      type="radio"
-                      label="Male"
-                      value="Male"
-                      {...register(`passengers.${index}.gender`, { required: true })}
-                    />
-                    <Form.Check
-                      inline
-                      type="radio"
-                      label="Female"
-                      value="Female"
-                      {...register(`passengers.${index}.gender`, { required: true })}
-                    />
+                    <Form.Check inline type="radio" label="Male" value="Male" {...register(`passengers.${index}.gender`, { required: true })} />
+                    <Form.Check inline type="radio" label="Female" value="Female" {...register(`passengers.${index}.gender`, { required: true })} />
                   </div>
                   {errors.passengers?.[index]?.gender && (
                     <small className="text-danger">Select gender</small>
@@ -130,11 +132,7 @@ const PaymentPage = () => {
 
                 <Form.Group>
                   <Form.Label>Age</Form.Label>
-                  <Form.Control
-                    type="number"
-                    placeholder="Age"
-                    {...register(`passengers.${index}.age`, { required: true, min: 1 })}
-                  />
+                  <Form.Control type="number" placeholder="Age" {...register(`passengers.${index}.age`, { required: true, min: 1 })} />
                   {errors.passengers?.[index]?.age && (
                     <small className="text-danger">Valid age required</small>
                   )}
@@ -164,11 +162,7 @@ const PaymentPage = () => {
           {/* Email */}
           <Form.Group className="mb-3">
             <Form.Label>Email ID</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Email ID"
-              {...register("email", { required: true })}
-            />
+            <Form.Control type="email" placeholder="Email ID" {...register("email", { required: true })} />
             {errors.email && <small className="text-danger">Email is required</small>}
           </Form.Group>
 
@@ -181,11 +175,7 @@ const PaymentPage = () => {
                 <option value="+1">+1</option>
                 <option value="+44">+44</option>
               </Form.Select>
-              <Form.Control
-                type="tel"
-                placeholder="Phone Number"
-                {...register("phone", { required: true })}
-              />
+              <Form.Control type="tel" placeholder="Phone Number" {...register("phone", { required: true })} />
             </div>
             {errors.phone && <small className="text-danger">Phone is required</small>}
           </Form.Group>
@@ -196,13 +186,11 @@ const PaymentPage = () => {
               <strong>Total Amount :</strong> INR {bus.price * selectedSeats.length}.00 <br />
               <small className="text-muted">(*Exclusive of Taxes)</small>
             </div>
-            <Button type="submit" className="btn-danger px-4">
-              PROCEED TO PAY
-            </Button>
+            <Button type="submit" className="btn-danger px-4"> PROCEED TO PAY </Button>
           </div>
         </Form>
       </Container>
-      <Copy/>
+      <Copy />
     </div>
   );
 };

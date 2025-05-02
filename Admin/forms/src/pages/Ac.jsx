@@ -6,6 +6,10 @@ import './Addbus.css';
 import './Table.css';
 import { exportCSV, exportExcel } from './export';
 import { Dropdown, DropdownButton } from 'react-bootstrap';
+import { FaEye } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa";
+import { RiDeleteBinLine } from "react-icons/ri";
+import Pagination from 'react-bootstrap/Pagination';
 
 const Ac = () => {
     const [busList, setBusList] = useState([]);
@@ -171,7 +175,9 @@ const Ac = () => {
         return (
             (bus.busName.toLowerCase().includes(lowerSearchQuery) ||
                 bus.from.toLowerCase().includes(lowerSearchQuery) ||
-                bus.to.toLowerCase().includes(lowerSearchQuery))
+                bus.to.toLowerCase().includes(lowerSearchQuery)) ||
+                bus.price.toString().includes(lowerSearchQuery) ||
+                bus.seatsAvailable.toString().includes(lowerSearchQuery) 
         );
     });
     // Pagination logic
@@ -180,12 +186,15 @@ const Ac = () => {
     const currentBuses = filteredBuses
         .sort((a, b) => new Date(b.dateOfDeparture) - new Date(a.dateOfDeparture)) // Sort in descending order
         .slice(indexOfFirstBus, indexOfLastBus);
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    // const paginate = (pageNumber) => setCurrentPage(pageNumber);
     // Calculate pagination info
     const totalBuses = busList.length;
     const totalPages = Math.ceil(totalBuses / busesPerPage);
     const startBus = indexOfFirstBus + 1;
     const endBus = indexOfLastBus > totalBuses ? totalBuses : indexOfLastBus;
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
     // Function to handle CSV export
     const handleExportCSV = () => {
         exportCSV(filteredBuses);  // Pass filtered buses to the exportCSV function
@@ -230,13 +239,13 @@ const Ac = () => {
                 <div className='d-flex gap-2'>
                     {selectedBuses.length > 0 && (
                                             <Button variant="danger" onClick={handleDeleteSelected}>
-                                                Delete Selected Buses
+                                                <RiDeleteBinLine />
                                             </Button>
                                         )}
                     <Button variant="success" onClick={() => { resetForm(); setIsFormVisible(true); }}>
                         + Add Bus
                     </Button>
-                    <DropdownButton id="dropdown-export" title="Export" variant="outline-primary">
+                    <DropdownButton id="dropdown-export" title={<span className="export-title">Export</span>} variant="outline-primary">
                         <Dropdown.Item onClick={handleExportCSV}>Export as CSV</Dropdown.Item>
                         <Dropdown.Item onClick={handleExportExcel}>Export as Excel</Dropdown.Item>
                     </DropdownButton>
@@ -449,16 +458,16 @@ const Ac = () => {
                                 <td className='tablewidth'>{bus.seatsAvailable}</td>
                                 <td className='tablewidth'>{bus.status}</td>
                                 <td className='tablewidth'>
-                                    <Button variant="info" size="sm" onClick={() => { setSelectedBus(bus); setShowViewModal(true); }} style={{ width: "60px" }}>View</Button>{' '}
-                                    <Button variant="warning" size="sm" onClick={() => handleEdit(bus)} style={{ width: "60px" }}>Edit</Button>{' '}
-                                    <Button variant="danger" size="sm" onClick={() => handleDelete(bus._id)} style={{ width: "60px" }}>Delete</Button>
+                                    <Button variant="info"  onClick={() => { setSelectedBus(bus); setShowViewModal(true); }} ><FaEye /></Button>{' '}
+                                    <Button variant="warning"  onClick={() => handleEdit(bus)} ><FaEdit /></Button>{' '}
+                                    <Button variant="danger"  onClick={() => handleDelete(bus._id)} ><RiDeleteBinLine /></Button>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
                 {/* Pagination */}
-                <div className="pagination">
+                {/* <div className="pagination">
                     <span className='pagedetails'>{`Showing ${startBus} to ${endBus} of ${totalBuses} (${totalPages} Pages)`}</span>
                     <div>
                         {Array.from({ length: totalPages }, (_, index) => (
@@ -466,6 +475,62 @@ const Ac = () => {
                                 {index + 1}
                             </Button>
                         ))}
+                    </div>
+                </div> */}
+                <div className="d-flex justify-content-between align-items-center mt-3">
+                    <Pagination>
+                        <Pagination.First
+                            onClick={() => handlePageChange(1)}
+                            disabled={currentPage === 1}
+                        />
+                        <Pagination.Prev
+                            onClick={() => handlePageChange(currentPage - 1)}
+                            disabled={currentPage === 1}
+                        />
+
+                        {/* Dynamically show pages with ellipsis */}
+                        {currentPage > 2 && (
+                            <>
+                                <Pagination.Item onClick={() => handlePageChange(1)}>
+                                    1
+                                </Pagination.Item>
+                                <Pagination.Ellipsis />
+                            </>
+                        )}
+
+                        {[...Array(totalPages)].map((_, index) => {
+                            const pageNumber = index + 1;
+                            if (pageNumber >= currentPage - 1 && pageNumber <= currentPage + 1) {
+                                return (
+                                    <Pagination.Item
+                                        key={pageNumber}
+                                        active={currentPage === pageNumber}
+                                        onClick={() => handlePageChange(pageNumber)}
+                                    >
+                                        {pageNumber}
+                                    </Pagination.Item>
+                                );
+                            }
+                            return null;
+                        })}
+
+                        {currentPage < totalPages - 1 && (
+                            <>
+                                <Pagination.Ellipsis />
+                                <Pagination.Item onClick={() => handlePageChange(totalPages)}>
+                                    {totalPages}
+                                </Pagination.Item>
+                            </>
+                        )}
+
+                        <Pagination.Next
+                            onClick={() => handlePageChange(currentPage + 1)}
+                            disabled={currentPage === totalPages}
+                        />
+                    </Pagination>
+
+                    <div className="text-end pe-2" style={{ fontSize: "14px" }}>
+                        {`Showing ${startBus} to ${endBus} of ${totalBuses} (${totalPages} Pages)`}
                     </div>
                 </div>
             </div>

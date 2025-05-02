@@ -114,6 +114,7 @@ import { useState } from "react";
 import { Collapse } from "react-bootstrap";
 import './Sidebar.css';
 
+
 const Sidebar = () => {
   const [openCategories, setOpenCategories] = useState(false);
 
@@ -171,7 +172,7 @@ const Sidebar = () => {
         </li>
         <li className="nav-item mb-2">
           <Link to="/admin/bookings" className="nav-link text-white">
-            <i className="bi bi-people me-2"></i> Bookings
+          <i className="bi bi-ticket me-2"></i> Bookings
           </Link>
         </li>
       </ul>

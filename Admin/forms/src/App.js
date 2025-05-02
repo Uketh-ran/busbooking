@@ -9,6 +9,8 @@ import Offers from "./pages/Offers.jsx";
 import Ac from "./pages/Ac.jsx";
 import Nonac from "./pages/Nonac.jsx";
 import User from "./pages/User.jsx";
+import Booking from "./pages/Booking.jsx";
+
 
 function App() {
   return (
@@ -23,7 +25,7 @@ function App() {
           <Route path="/admin/buses" element={<Addbus />} />
           <Route path="/admin/offers" element={<Offers />} />
           <Route path="/admin/users" element={<User />} />
-          
+          <Route path="/admin/bookings" element={<Booking />} />
         </Route>
       </Routes>
     </BrowserRouter>

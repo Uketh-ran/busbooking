@@ -31,3 +31,7 @@ input {
     right: 5px;
     bottom: 5px;
   }
+  .export-title {
+    padding: 7px 15px; /* top-bottom 5px, left-right 15px */
+    display: inline-block; 
+  }

@@ -20,7 +20,7 @@ app.use('/api/acsleeper', require('./routes/acsleeperRoute'));
 app.use('/api/nonac', require('./routes/nonacRoute'));
 app.use('/api/offers', offerRoutes);
 app.use('/api/auth', require('./routes/auth'));
-
+app.use('/api/bookings', require('./routes/booking'));
 
 
 const PORT = 5001;

@@ -7,6 +7,9 @@ import { Modal, Button, Form } from "react-bootstrap";
 import "./Table.css";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import { Pagination } from 'react-bootstrap';
+import { FaEye } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa";
+import { RiDeleteBinLine } from "react-icons/ri";
 
 const Offers = () => {
   const [formData, setFormData] = useState({
@@ -76,7 +79,18 @@ const Offers = () => {
     setShowModal(true);
   };
 
+  // const handleDelete = async (id) => {
+  //   try {
+  //     await axios.delete(`http://localhost:5001/api/offers/${id}`);
+  //     fetchOffers();
+  //   } catch (error) {
+  //     console.error("Error deleting offer:", error);
+  //   }
+  // };
   const handleDelete = async (id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this offer?");
+    if (!confirmDelete) return;
+
     try {
       await axios.delete(`http://localhost:5001/api/offers/${id}`);
       fetchOffers();
@@ -112,12 +126,11 @@ const Offers = () => {
   };
 
   const handleExportCSV = () => {
-    const exportData = filteredOffers.map(({ title, offer, valid, image, bg }) => ({
+    const exportData = filteredOffers.map(({ title, offer, valid, image }) => ({
       Title: title,
       OfferCode: offer,
       ValidTill: valid,
-      Image: image,
-      Background: bg,
+      Image: image
     }));
 
     const worksheet = XLSX.utils.json_to_sheet(exportData);
@@ -130,12 +143,11 @@ const Offers = () => {
   };
 
   const handleExportExcel = () => {
-    const exportData = filteredOffers.map(({ title, offer, valid, image, bg }) => ({
+    const exportData = filteredOffers.map(({ title, offer, valid, image }) => ({
       Title: title,
       OfferCode: offer,
       ValidTill: valid,
-      Image: image,
-      Background: bg,
+      Image: image
     }));
 
     const worksheet = XLSX.utils.json_to_sheet(exportData);
@@ -182,7 +194,7 @@ const Offers = () => {
         <div className="d-flex gap-2">
           {selectedOffers.length > 0 && (
             <Button variant="danger" onClick={handleBulkDelete} className="mb-3">
-              Delete Selected
+              <RiDeleteBinLine />
             </Button>
           )}
           <Button variant="success" onClick={() => setShowModal(true)} className="mb-3">
@@ -227,9 +239,9 @@ const Offers = () => {
                   <img src={offer.image} alt={offer.title} width="60" />
                 </td>
                 <td className='tablewidth'>
-                  <Button variant="info" size="sm" onClick={() => handleView(offer)}>View</Button>{' '}
-                  <Button variant="warning" size="sm" onClick={() => handleEdit(offer)}>Edit</Button>{' '}
-                  <Button variant="danger" size="sm" onClick={() => handleDelete(offer._id)}>Delete</Button>
+                  <Button variant="info" onClick={() => handleView(offer)}><FaEye /></Button>{' '}
+                  <Button variant="warning" onClick={() => handleEdit(offer)}><FaEdit /></Button>{' '}
+                  <Button variant="danger" onClick={() => handleDelete(offer._id)}><RiDeleteBinLine /></Button>
                 </td>
               </tr>
             ))}
@@ -239,24 +251,64 @@ const Offers = () => {
         {/* Pagination Section */}
         <div className="d-flex justify-content-between align-items-center mt-3">
           <Pagination>
-            {[...Array(totalPages)].map((_, index) => (
-              <Pagination.Item
-                key={index + 1}
-                active={currentPage === index + 1}
-                onClick={() => handlePageChange(index + 1)}
-              >
-                {index + 1}
-              </Pagination.Item>
-            ))}
+            <Pagination.First
+              onClick={() => handlePageChange(1)}
+              disabled={currentPage === 1}
+            />
+            <Pagination.Prev
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+            />
+
+            {/* Dynamically show pages with ellipsis */}
+            {currentPage > 2 && (
+              <>
+                <Pagination.Item onClick={() => handlePageChange(1)}>
+                  1
+                </Pagination.Item>
+                <Pagination.Ellipsis />
+              </>
+            )}
+
+            {[...Array(totalPages)].map((_, index) => {
+              const pageNumber = index + 1;
+              if (pageNumber >= currentPage - 1 && pageNumber <= currentPage + 1) {
+                return (
+                  <Pagination.Item
+                    key={pageNumber}
+                    active={currentPage === pageNumber}
+                    onClick={() => handlePageChange(pageNumber)}
+                  >
+                    {pageNumber}
+                  </Pagination.Item>
+                );
+              }
+              return null;
+            })}
+
+            {currentPage < totalPages - 1 && (
+              <>
+                <Pagination.Ellipsis />
+                <Pagination.Item onClick={() => handlePageChange(totalPages)}>
+                  {totalPages}
+                </Pagination.Item>
+              </>
+            )}
+
+            <Pagination.Next
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            />
           </Pagination>
 
           <div className="text-end pe-2" style={{ fontSize: "14px" }}>
             {`Showing ${indexOfFirstItem + 1} to ${Math.min(
               indexOfLastItem,
-              offers.length
-            )} of ${offers.length} (${totalPages} Pages)`}
+              filteredOffers.length
+            )} of ${filteredOffers.length} (${totalPages} Pages)`}
           </div>
         </div>
+
       </div>
 
       {/* Add/Edit Offer Modal */}
