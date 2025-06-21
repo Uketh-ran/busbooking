@@ -86,5 +86,49 @@ router.post('/update/status/:id', async (req, res) => {
     res.status(500).json({ message: 'Failed to update bus status' });
   }
 });
+// POST route to book a seat
+router.post('/:id/bookseat', async (req, res) => {
+  const { seatNumber } = req.body;
+
+  if (typeof seatNumber !== 'number') {
+    return res.status(400).json({ message: "Invalid seat number" });
+  }
+
+  try {
+    const bus = await Bus.findById(req.params.id);
+    if (!bus) return res.status(404).json({ message: "Bus not found" });
+
+    if (bus.bookedSeats && bus.bookedSeats.includes(seatNumber)) {
+      return res.status(400).json({ message: "Seat already booked" });
+    }
+
+    if (!bus.bookedSeats) {
+      bus.bookedSeats = []; // Initialize if not present
+    }
+
+    bus.bookedSeats.push(seatNumber);
+    bus.seatsAvailable = bus.seatsAvailable - 1;
+    await bus.save();
+
+    res.json({ success: true, bookedSeats: bus.bookedSeats });
+  } catch (err) {
+    console.error("Seat booking error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// GET route to fetch booked seats for a bus
+router.get('/:id/bookedseats', async (req, res) => {
+  try {
+    const bus = await Bus.findById(req.params.id);
+    if (!bus) return res.status(404).json({ message: "Bus not found" });
+
+    res.json({ bookedSeats: bus.bookedSeats || [] });
+  } catch (err) {
+    console.error("Fetching booked seats error:", err);
+    res.status(500).json({ message: "Failed to fetch booked seats" });
+  }
+});
+
 
 module.exports = router;

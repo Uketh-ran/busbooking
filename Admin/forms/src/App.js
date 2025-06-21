@@ -22,7 +22,6 @@ function App() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="categories/ac" element={<Ac/>} />
           <Route path="categories/non-ac" element={<Nonac/>} />
-          {/* <Route path="/admin/buses" element={<Addbus />} /> */}
           <Route path="/admin/offers" element={<Offers />} />
           <Route path="/admin/users" element={<User />} />
           <Route path="/admin/bookings" element={<Booking />} />

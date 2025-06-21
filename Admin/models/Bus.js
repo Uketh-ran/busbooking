@@ -67,6 +67,10 @@ const BusSchema = new mongoose.Schema({
     type: String,
     enum: ['enabled', 'disabled'],
     required: true
+  },
+  bookedSeats: {
+    type: [Number], // array of seat numbers
+    default: []
   }
 });
 

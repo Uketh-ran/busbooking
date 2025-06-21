@@ -23,48 +23,89 @@ const Buspage = () => {
   const [selectedSeats, setSelectedSeats] = useState({});
 
   const [sortConfig, setSortConfig] = useState({ key: null, ascending: true });
-  const bookedSeats = [3, 5, 9];
-  const maleSeats = [2, 6];
-  const femaleSeats = [4, 8];
-
-
+  const [bookedSeatsMap, setBookedSeatsMap] = useState({}); // { busId: [seats] }
   const handleSort = (key) => {
     setSortConfig((prev) => ({
       key,
       ascending: prev.key === key ? !prev.ascending : true,
     }));
   };
-
   useEffect(() => {
-    fetch('http://localhost:5001/api/bus')
-      .then(res => res.json())
-      .then(data => {
+    const fetchBusesAndSeats = async () => {
+      try {
+        const res = await fetch('http://localhost:5001/api/bus');
+        const data = await res.json();
+
         const filteredBuses = data.filter(bus =>
           bus.from.toLowerCase() === from.toLowerCase() &&
           bus.to.toLowerCase() === to.toLowerCase() &&
           format(new Date(bus.dateOfDeparture), 'yyyy-MM-dd') === format(new Date(date), 'yyyy-MM-dd')
         );
+
         setBusList(filteredBuses);
-      })
-      .catch(err => console.error('Error fetching buses:', err));
+
+        const bookedSeatsObj = {};
+        await Promise.all(filteredBuses.map(async (bus) => {
+          try {
+            const res = await fetch(`http://localhost:5001/api/bus/${bus._id}/bookedseats`);
+            const result = await res.json();
+            bookedSeatsObj[bus._id] = result.bookedSeats || [];
+          } catch (err) {
+            console.error(`Error fetching booked seats for bus ${bus._id}:`, err);
+            bookedSeatsObj[bus._id] = [];
+          }
+        }));
+
+        setBookedSeatsMap(bookedSeatsObj);
+      } catch (err) {
+        console.error('Error fetching buses:', err);
+      }
+    };
+
+    fetchBusesAndSeats(); // call async function inside useEffect
   }, [from, to, date]);
+
 
   const travelDate = new Date(date);
   const formattedDate = format(travelDate, 'dd/MM/yyyy');
 
-  const handleSeatSelection = (seatNumber, busId) => {
-    setSelectedSeats((prevSeats) => {
-      const currentBusSeats = prevSeats[busId] || [];
-      const isSelected = currentBusSeats.includes(seatNumber);
+  const handleSeatSelection = async (seatNumber, busId) => {
+    const currentSeats = selectedSeats[busId] || [];
+    const isAlreadySelected = currentSeats.includes(seatNumber);
+    const isAlreadyBooked = (bookedSeatsMap[busId] || []).includes(seatNumber);
 
-      return {
-        ...prevSeats,
-        [busId]: isSelected
-          ? currentBusSeats.filter(seat => seat !== seatNumber)
-          : [...currentBusSeats, seatNumber],
-      };
-    });
+    // Prevent duplicate booking or reselecting
+    if (isAlreadySelected || isAlreadyBooked) return;
+
+    try {
+      const res = await fetch(`http://localhost:5001/api/bus/${busId}/bookseat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ seatNumber }),
+      });
+
+      const result = await res.json();
+
+      if (result.success) {
+        // ✅ Update local state
+        setSelectedSeats(prev => ({
+          ...prev,
+          [busId]: [...(prev[busId] || []), seatNumber],
+        }));
+
+        setBookedSeatsMap(prev => ({
+          ...prev,
+          [busId]: [...(prev[busId] || []), seatNumber],
+        }));
+      } else {
+        alert(result.message || "Failed to book seat.");
+      }
+    } catch (err) {
+      console.error("Booking error:", err);
+      alert("Something went wrong while booking. Try again.");
+    }
   };
+
 
 
   return (
@@ -172,9 +213,8 @@ const Buspage = () => {
                               if (col === null) return <Col xs={1} key={index}></Col>;
 
                               const seatNumber = rowIndex * 4 + col;
-                              const isBooked = bookedSeats.includes(seatNumber);
-                              const isMale = maleSeats.includes(seatNumber);
-                              const isFemale = femaleSeats.includes(seatNumber);
+                              // const isBooked = bookedSeats.includes(seatNumber);
+                              const isBooked = (bookedSeatsMap[busId] || []).includes(seatNumber);
                               const isSelected = (selectedSeats[busId] || []).includes(seatNumber);
 
                               return (
@@ -182,9 +222,7 @@ const Buspage = () => {
                                   <Button
                                     variant={isBooked ? "secondary" : "outline-secondary"}
                                     className={`seats-btn 
-              ${isSelected ? "bg-success text-white" : ""} 
-              ${isMale ? "border-primary border-3" : ""} 
-              ${isFemale ? "border-danger border-3" : ""}`}
+              ${isSelected ? "bg-success text-white" : ""} `}
                                     onClick={() => !isBooked && handleSeatSelection(seatNumber, busId)}
                                   >
                                     {seatNumber}
@@ -204,12 +242,6 @@ const Buspage = () => {
                         </div>
                         <div className="d-flex align-items-center mb-2">
                           <Button variant="secondary" className="seat-box"></Button> <span className="ms-2">Booked</span>
-                        </div>
-                        <div className="d-flex align-items-center mb-2">
-                          <Button variant="outline-secondary" className="border-primary seat-box"></Button> <span className="ms-2">Male</span>
-                        </div>
-                        <div className="d-flex align-items-center">
-                          <Button variant="outline-secondary" className="border-danger seat-box"></Button> <span className="ms-2">Female</span>
                         </div>
                       </div>
                     </div>

@@ -185,7 +185,7 @@ const Ac = () => {
     const currentBuses = filteredBuses
         .sort((a, b) => new Date(b.dateOfDeparture) - new Date(a.dateOfDeparture)) // Sort in descending order
         .slice(indexOfFirstBus, indexOfLastBus);
-    // const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    
     // Calculate pagination info
     const totalBuses = busList.length;
     const totalPages = Math.ceil(totalBuses / busesPerPage);
@@ -195,13 +195,6 @@ const Ac = () => {
         setCurrentPage(page);
     };
     // Function to handle CSV export
-    // const handleExportCSV = () => {
-    //     exportCSV(filteredBuses);  // Pass filtered buses to the exportCSV function
-    // };
-    // // Function to handle Excel export
-    // const handleExportExcel = () => {
-    //     exportExcel(filteredBuses);  // Pass filtered buses to the exportExcel function
-    // };
     const handleExportCSV = () => {
         const dataToExport = selectedBuses.length > 0 ? selectedBuses : filteredBuses;
         exportCSV(dataToExport);
@@ -211,16 +204,6 @@ const Ac = () => {
         const dataToExport = selectedBuses.length > 0 ? selectedBuses : filteredBuses;
         exportExcel(dataToExport);
     };
-
-    // const handleCheckboxChange = (bus) => {
-    //     setSelectedBuses((prev) => {
-    //         const exists = prev.find((b) => b._id === bus._id);
-    //         return exists
-    //             ? prev.filter((b) => b._id !== bus._id)
-    //             : [...prev, bus];
-    //     });
-    // };
-
 
     const handleDeleteSelected = async () => {
         if (selectedBuses.length === 0) {
@@ -438,14 +421,7 @@ const Ac = () => {
                     <thead>
                         <tr>
                             <th>
-                                {/* <input type="checkbox" checked={selectedBuses.length === currentBuses.length} onChange={(e) => {
-                                if (e.target.checked) {
-                                    setSelectedBuses(currentBuses.map(bus => bus._id));
-                                } else {
-                                    setSelectedBuses([]);
-                                }
-                            }}
-                            /> */}
+                               
                                 <input
                                     type="checkbox"
                                     checked={selectedBuses.length === currentBuses.length}
@@ -473,14 +449,7 @@ const Ac = () => {
                         {currentBuses.map((bus, index) => (
                             <tr key={bus._id}>
                                 <td>
-                                    {/* <input type="checkbox" checked={selectedBuses.includes(bus._id)} onChange={() => {
-                                    if (selectedBuses.includes(bus._id)) {
-                                        setSelectedBuses(selectedBuses.filter(id => id !== bus._id));
-                                    } else {
-                                        setSelectedBuses([...selectedBuses, bus._id]);
-                                    }
-                                }}
-                                /> */}
+                                    
                                     <input
                                         type="checkbox"
                                         checked={selectedBuses.some((b) => b._id === bus._id)}

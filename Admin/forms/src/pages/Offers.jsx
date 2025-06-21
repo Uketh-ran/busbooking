@@ -79,14 +79,6 @@ const Offers = () => {
     setShowModal(true);
   };
 
-  // const handleDelete = async (id) => {
-  //   try {
-  //     await axios.delete(`http://localhost:5001/api/offers/${id}`);
-  //     fetchOffers();
-  //   } catch (error) {
-  //     console.error("Error deleting offer:", error);
-  //   }
-  // };
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this offer?");
     if (!confirmDelete) return;
