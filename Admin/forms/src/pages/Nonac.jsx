@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
 import './Addbus.css';
@@ -176,8 +175,8 @@ const Nonac = () => {
       (bus.busName.toLowerCase().includes(lowerSearchQuery) ||
         bus.from.toLowerCase().includes(lowerSearchQuery) ||
         bus.to.toLowerCase().includes(lowerSearchQuery)) ||
-        bus.price.toString().includes(lowerSearchQuery) ||
-        bus.seatsAvailable.toString().includes(lowerSearchQuery) 
+      bus.price.toString().includes(lowerSearchQuery) ||
+      bus.seatsAvailable.toString().includes(lowerSearchQuery)
     );
   });
   // Pagination logic
@@ -186,7 +185,6 @@ const Nonac = () => {
   const currentBuses = filteredBuses
     .sort((a, b) => new Date(b.dateOfDeparture) - new Date(a.dateOfDeparture)) // Sort in descending order
     .slice(indexOfFirstBus, indexOfLastBus);
-  // const paginate = (pageNumber) => setCurrentPage(pageNumber);
   // Calculate pagination info
   const totalBuses = busList.length;
   const totalPages = Math.ceil(totalBuses / busesPerPage);
@@ -194,14 +192,16 @@ const Nonac = () => {
   const endBus = indexOfLastBus > totalBuses ? totalBuses : indexOfLastBus;
   const handlePageChange = (page) => {
     setCurrentPage(page);
-};
+  };
   // Function to handle CSV export
   const handleExportCSV = () => {
-    exportCSV(filteredBuses);  // Pass filtered buses to the exportCSV function
+    const dataToExport = selectedBuses.length > 0 ? selectedBuses : filteredBuses;
+    exportCSV(dataToExport);
   };
-  // Function to handle Excel export
+
   const handleExportExcel = () => {
-    exportExcel(filteredBuses);  // Pass filtered buses to the exportExcel function
+    const dataToExport = selectedBuses.length > 0 ? selectedBuses : filteredBuses;
+    exportExcel(dataToExport);
   };
   const handleDeleteSelected = async () => {
     if (selectedBuses.length === 0) {
@@ -228,25 +228,21 @@ const Nonac = () => {
   return (
     <div>
       <div className="d-flex justify-content-between mb-3">
-        <input
-          type="text"
-          placeholder="Search by bus name, from, or to"
-          value={searchQuery}
-          onChange={handleSearch}
+        <input type="text" placeholder="Search by bus name, from, or to" value={searchQuery} onChange={handleSearch}
           className="form-control w-25"
         />
         <div className='d-flex gap-2'>
           {selectedBuses.length > 0 && (
-                                  <Button variant="danger" onClick={handleDeleteSelected}>
-                                      <RiDeleteBinLine />
-                                  </Button>
-                              )}
+            <Button variant="danger" onClick={handleDeleteSelected}>
+              <RiDeleteBinLine />
+            </Button>
+          )}
           <Button variant="success" onClick={() => { resetForm(); setIsFormVisible(true); }}>
             + Add Bus
           </Button>
           <DropdownButton id="dropdown-export" title={<span className="export-title">Export</span>} variant="outline-primary" >
             <Dropdown.Item onClick={handleExportCSV}>Export as CSV</Dropdown.Item>
-            <Dropdown.Item  onClick={handleExportExcel}>Export as Excel</Dropdown.Item>
+            <Dropdown.Item onClick={handleExportExcel}>Export as Excel</Dropdown.Item>
           </DropdownButton>
         </div>
       </div>
@@ -409,9 +405,7 @@ const Nonac = () => {
             </div>
           )}
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowViewModal(false)}>Close</Button>
-        </Modal.Footer>
+
       </Modal>
 
       {/* Table to Display Bus List */}
@@ -419,14 +413,19 @@ const Nonac = () => {
         <table>
           <thead>
             <tr>
-              <th><Form.Check type="checkbox" checked={selectedBuses.length === currentBuses.length} onChange={(e) => {
-                if (e.target.checked) {
-                  setSelectedBuses(currentBuses.map(bus => bus._id));
-                } else {
-                  setSelectedBuses([]);
-                }
-              }}
-              /></th>
+              <th>
+                <input
+                  type="checkbox"
+                  checked={selectedBuses.length === currentBuses.length}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      setSelectedBuses(currentBuses); // store full bus objects
+                    } else {
+                      setSelectedBuses([]);
+                    }
+                  }}
+                />
+              </th>
               <th className='tablewidth'>Bus Name</th>
               <th className='tablewidth'>Type</th>
               <th className='tablewidth'>From</th>
@@ -440,14 +439,22 @@ const Nonac = () => {
           <tbody>
             {currentBuses.map((bus, index) => (
               <tr key={bus._id}>
-                <td><Form.Check type="checkbox" checked={selectedBuses.includes(bus._id)} onChange={() => {
-                  if (selectedBuses.includes(bus._id)) {
-                    setSelectedBuses(selectedBuses.filter(id => id !== bus._id));
-                  } else {
-                    setSelectedBuses([...selectedBuses, bus._id]);
-                  }
-                }}
-                /></td>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={selectedBuses.some((b) => b._id === bus._id)}
+                    onChange={() => {
+                      setSelectedBuses((prevSelected) => {
+                        const exists = prevSelected.find((b) => b._id === bus._id);
+                        if (exists) {
+                          return prevSelected.filter((b) => b._id !== bus._id);
+                        } else {
+                          return [...prevSelected, bus];
+                        }
+                      });
+                    }}
+                  />
+                </td>
                 <td className='tablewidth'>{bus.busName}</td>
                 <td className='tablewidth'>{bus.type}</td>
                 <td className='tablewidth'>{bus.from}</td>
@@ -456,81 +463,71 @@ const Nonac = () => {
                 <td className='tablewidth'>{bus.seatsAvailable}</td>
                 <td className='tablewidth'>{bus.status}</td>
                 <td className='tablewidth'>
-                  <Button variant="info"  onClick={() => { setSelectedBus(bus); setShowViewModal(true); }} ><FaEye /></Button>{' '}
-                  <Button variant="warning"  onClick={() => handleEdit(bus)} ><FaEdit /></Button>{' '}
-                  <Button variant="danger"  onClick={() => handleDelete(bus._id)} ><RiDeleteBinLine /></Button>
+                  <Button variant="info" onClick={() => { setSelectedBus(bus); setShowViewModal(true); }} ><FaEye /></Button>{' '}
+                  <Button variant="warning" onClick={() => handleEdit(bus)} ><FaEdit /></Button>{' '}
+                  <Button variant="danger" onClick={() => handleDelete(bus._id)} ><RiDeleteBinLine /></Button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
         {/* Pagination */}
-        {/* <div className="pagination">
-          <span className='pagedetails'>{`Showing ${startBus} to ${endBus} of ${totalBuses} (${totalPages} Pages)`}</span>
-          <div>
-            {Array.from({ length: totalPages }, (_, index) => (
-              <Button key={index + 1} onClick={() => paginate(index + 1)} variant={currentPage === index + 1 ? 'primary' : 'secondary'} >
-                {index + 1}
-              </Button>
-            ))}
-          </div>
-        </div> */}
         <div className="d-flex justify-content-between align-items-center mt-3">
-                    <Pagination>
-                        <Pagination.First
-                            onClick={() => handlePageChange(1)}
-                            disabled={currentPage === 1}
-                        />
-                        <Pagination.Prev
-                            onClick={() => handlePageChange(currentPage - 1)}
-                            disabled={currentPage === 1}
-                        />
+          <Pagination>
+            <Pagination.First
+              onClick={() => handlePageChange(1)}
+              disabled={currentPage === 1}
+            />
+            <Pagination.Prev
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+            />
 
-                        {/* Dynamically show pages with ellipsis */}
-                        {currentPage > 2 && (
-                            <>
-                                <Pagination.Item onClick={() => handlePageChange(1)}>
-                                    1
-                                </Pagination.Item>
-                                <Pagination.Ellipsis />
-                            </>
-                        )}
+            {/* Dynamically show pages with ellipsis */}
+            {currentPage > 2 && (
+              <>
+                <Pagination.Item onClick={() => handlePageChange(1)}>
+                  1
+                </Pagination.Item>
+                <Pagination.Ellipsis />
+              </>
+            )}
 
-                        {[...Array(totalPages)].map((_, index) => {
-                            const pageNumber = index + 1;
-                            if (pageNumber >= currentPage - 1 && pageNumber <= currentPage + 1) {
-                                return (
-                                    <Pagination.Item
-                                        key={pageNumber}
-                                        active={currentPage === pageNumber}
-                                        onClick={() => handlePageChange(pageNumber)}
-                                    >
-                                        {pageNumber}
-                                    </Pagination.Item>
-                                );
-                            }
-                            return null;
-                        })}
+            {[...Array(totalPages)].map((_, index) => {
+              const pageNumber = index + 1;
+              if (pageNumber >= currentPage - 1 && pageNumber <= currentPage + 1) {
+                return (
+                  <Pagination.Item
+                    key={pageNumber}
+                    active={currentPage === pageNumber}
+                    onClick={() => handlePageChange(pageNumber)}
+                  >
+                    {pageNumber}
+                  </Pagination.Item>
+                );
+              }
+              return null;
+            })}
 
-                        {currentPage < totalPages - 1 && (
-                            <>
-                                <Pagination.Ellipsis />
-                                <Pagination.Item onClick={() => handlePageChange(totalPages)}>
-                                    {totalPages}
-                                </Pagination.Item>
-                            </>
-                        )}
+            {currentPage < totalPages - 1 && (
+              <>
+                <Pagination.Ellipsis />
+                <Pagination.Item onClick={() => handlePageChange(totalPages)}>
+                  {totalPages}
+                </Pagination.Item>
+              </>
+            )}
 
-                        <Pagination.Next
-                            onClick={() => handlePageChange(currentPage + 1)}
-                            disabled={currentPage === totalPages}
-                        />
-                    </Pagination>
+            <Pagination.Next
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            />
+          </Pagination>
 
-                    <div className="text-end pe-2" style={{ fontSize: "14px" }}>
-                        {`Showing ${startBus} to ${endBus} of ${totalBuses} (${totalPages} Pages)`}
-                    </div>
-                </div>
+          <div className="text-end pe-2" style={{ fontSize: "14px" }}>
+            {`Showing ${startBus} to ${endBus} of ${totalBuses} (${totalPages} Pages)`}
+          </div>
+        </div>
       </div>
     </div>
   );

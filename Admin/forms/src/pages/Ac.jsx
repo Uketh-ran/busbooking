@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
 import './Addbus.css';
@@ -176,8 +175,8 @@ const Ac = () => {
             (bus.busName.toLowerCase().includes(lowerSearchQuery) ||
                 bus.from.toLowerCase().includes(lowerSearchQuery) ||
                 bus.to.toLowerCase().includes(lowerSearchQuery)) ||
-                bus.price.toString().includes(lowerSearchQuery) ||
-                bus.seatsAvailable.toString().includes(lowerSearchQuery) 
+            bus.price.toString().includes(lowerSearchQuery) ||
+            bus.seatsAvailable.toString().includes(lowerSearchQuery)
         );
     });
     // Pagination logic
@@ -196,13 +195,33 @@ const Ac = () => {
         setCurrentPage(page);
     };
     // Function to handle CSV export
+    // const handleExportCSV = () => {
+    //     exportCSV(filteredBuses);  // Pass filtered buses to the exportCSV function
+    // };
+    // // Function to handle Excel export
+    // const handleExportExcel = () => {
+    //     exportExcel(filteredBuses);  // Pass filtered buses to the exportExcel function
+    // };
     const handleExportCSV = () => {
-        exportCSV(filteredBuses);  // Pass filtered buses to the exportCSV function
+        const dataToExport = selectedBuses.length > 0 ? selectedBuses : filteredBuses;
+        exportCSV(dataToExport);
     };
-    // Function to handle Excel export
+
     const handleExportExcel = () => {
-        exportExcel(filteredBuses);  // Pass filtered buses to the exportExcel function
+        const dataToExport = selectedBuses.length > 0 ? selectedBuses : filteredBuses;
+        exportExcel(dataToExport);
     };
+
+    // const handleCheckboxChange = (bus) => {
+    //     setSelectedBuses((prev) => {
+    //         const exists = prev.find((b) => b._id === bus._id);
+    //         return exists
+    //             ? prev.filter((b) => b._id !== bus._id)
+    //             : [...prev, bus];
+    //     });
+    // };
+
+
     const handleDeleteSelected = async () => {
         if (selectedBuses.length === 0) {
             alert('Please select at least one bus to delete.');
@@ -238,10 +257,10 @@ const Ac = () => {
                 />
                 <div className='d-flex gap-2'>
                     {selectedBuses.length > 0 && (
-                                            <Button variant="danger" onClick={handleDeleteSelected}>
-                                                <RiDeleteBinLine />
-                                            </Button>
-                                        )}
+                        <Button variant="danger" onClick={handleDeleteSelected}>
+                            <RiDeleteBinLine />
+                        </Button>
+                    )}
                     <Button variant="success" onClick={() => { resetForm(); setIsFormVisible(true); }}>
                         + Add Bus
                     </Button>
@@ -411,9 +430,6 @@ const Ac = () => {
                         </div>
                     )}
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowViewModal(false)}>Close</Button>
-                </Modal.Footer>
             </Modal>
 
             {/* Table to Display Bus List */}
@@ -421,14 +437,28 @@ const Ac = () => {
                 <table>
                     <thead>
                         <tr>
-                            <th><Form.Check type="checkbox" checked={selectedBuses.length === currentBuses.length} onChange={(e) => {
+                            <th>
+                                {/* <input type="checkbox" checked={selectedBuses.length === currentBuses.length} onChange={(e) => {
                                 if (e.target.checked) {
                                     setSelectedBuses(currentBuses.map(bus => bus._id));
                                 } else {
                                     setSelectedBuses([]);
                                 }
                             }}
-                            /></th>
+                            /> */}
+                                <input
+                                    type="checkbox"
+                                    checked={selectedBuses.length === currentBuses.length}
+                                    onChange={(e) => {
+                                        if (e.target.checked) {
+                                            setSelectedBuses(currentBuses); // store full bus objects
+                                        } else {
+                                            setSelectedBuses([]);
+                                        }
+                                    }}
+                                />
+
+                            </th>
                             <th className='tablewidth'>Bus Name</th>
                             <th className='tablewidth'>Type</th>
                             <th className='tablewidth'>From</th>
@@ -442,14 +472,31 @@ const Ac = () => {
                     <tbody>
                         {currentBuses.map((bus, index) => (
                             <tr key={bus._id}>
-                                <td><Form.Check type="checkbox" checked={selectedBuses.includes(bus._id)} onChange={() => {
+                                <td>
+                                    {/* <input type="checkbox" checked={selectedBuses.includes(bus._id)} onChange={() => {
                                     if (selectedBuses.includes(bus._id)) {
                                         setSelectedBuses(selectedBuses.filter(id => id !== bus._id));
                                     } else {
                                         setSelectedBuses([...selectedBuses, bus._id]);
                                     }
                                 }}
-                                /></td>
+                                /> */}
+                                    <input
+                                        type="checkbox"
+                                        checked={selectedBuses.some((b) => b._id === bus._id)}
+                                        onChange={() => {
+                                            setSelectedBuses((prevSelected) => {
+                                                const exists = prevSelected.find((b) => b._id === bus._id);
+                                                if (exists) {
+                                                    return prevSelected.filter((b) => b._id !== bus._id);
+                                                } else {
+                                                    return [...prevSelected, bus];
+                                                }
+                                            });
+                                        }}
+                                    />
+
+                                </td>
                                 <td className='tablewidth'>{bus.busName}</td>
                                 <td className='tablewidth'>{bus.type}</td>
                                 <td className='tablewidth'>{bus.from}</td>
@@ -458,25 +505,15 @@ const Ac = () => {
                                 <td className='tablewidth'>{bus.seatsAvailable}</td>
                                 <td className='tablewidth'>{bus.status}</td>
                                 <td className='tablewidth'>
-                                    <Button variant="info"  onClick={() => { setSelectedBus(bus); setShowViewModal(true); }} ><FaEye /></Button>{' '}
-                                    <Button variant="warning"  onClick={() => handleEdit(bus)} ><FaEdit /></Button>{' '}
-                                    <Button variant="danger"  onClick={() => handleDelete(bus._id)} ><RiDeleteBinLine /></Button>
+                                    <Button variant="info" onClick={() => { setSelectedBus(bus); setShowViewModal(true); }} ><FaEye /></Button>{' '}
+                                    <Button variant="warning" onClick={() => handleEdit(bus)} ><FaEdit /></Button>{' '}
+                                    <Button variant="danger" onClick={() => handleDelete(bus._id)} ><RiDeleteBinLine /></Button>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
                 {/* Pagination */}
-                {/* <div className="pagination">
-                    <span className='pagedetails'>{`Showing ${startBus} to ${endBus} of ${totalBuses} (${totalPages} Pages)`}</span>
-                    <div>
-                        {Array.from({ length: totalPages }, (_, index) => (
-                            <Button key={index + 1} onClick={() => paginate(index + 1)} variant={currentPage === index + 1 ? 'primary' : 'secondary'} >
-                                {index + 1}
-                            </Button>
-                        ))}
-                    </div>
-                </div> */}
                 <div className="d-flex justify-content-between align-items-center mt-3">
                     <Pagination>
                         <Pagination.First

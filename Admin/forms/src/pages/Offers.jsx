@@ -125,8 +125,13 @@ const Offers = () => {
     setShowViewModal(true);
   };
 
+
   const handleExportCSV = () => {
-    const exportData = filteredOffers.map(({ title, offer, valid, image }) => ({
+    const exportSource = selectedOffers.length > 0
+      ? offers.filter(offer => selectedOffers.includes(offer._id))
+      : filteredOffers;
+
+    const exportData = exportSource.map(({ title, offer, valid, image }) => ({
       Title: title,
       OfferCode: offer,
       ValidTill: valid,
@@ -142,8 +147,13 @@ const Offers = () => {
     saveAs(blob, "offers.csv");
   };
 
+
   const handleExportExcel = () => {
-    const exportData = filteredOffers.map(({ title, offer, valid, image }) => ({
+    const exportSource = selectedOffers.length > 0
+      ? offers.filter(offer => selectedOffers.includes(offer._id))
+      : filteredOffers;
+
+    const exportData = exportSource.map(({ title, offer, valid, image }) => ({
       Title: title,
       OfferCode: offer,
       ValidTill: valid,
@@ -160,7 +170,6 @@ const Offers = () => {
     });
     saveAs(blob, "offers.xlsx");
   };
-
 
   const filteredOffers = offers.filter((offer) => {
     const search = searchQuery.toLowerCase();

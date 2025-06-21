@@ -28,26 +28,10 @@ const User = () => {
         fetchUsers();
     }, []);
 
-    // const handleDelete = async (id) => {
-    //     try {
-    //         const response = await fetch(`http://localhost:5001/api/auth/users/${id}`, {
-    //             method: 'DELETE',
-    //         });
-    //         const data = await response.json();
-    //         if (response.ok) {
-    //             setUsers(users.filter(user => user._id !== id));
-    //         } else {
-    //             alert(data.message);
-    //         }
-    //     } catch (error) {
-    //         console.error('Error deleting user:', error);
-    //     }
-    // };
-
     const handleDelete = async (id) => {
         const confirmDelete = window.confirm("Are you sure you want to delete this user?");
         if (!confirmDelete) return;
-    
+
         try {
             const response = await fetch(`http://localhost:5001/api/auth/users/${id}`, {
                 method: 'DELETE',
@@ -62,7 +46,6 @@ const User = () => {
             console.error('Error deleting user:', error);
         }
     };
-    
 
     const handleSelect = (userId) => {
         setSelectedUsers((prev) =>
@@ -71,7 +54,6 @@ const User = () => {
                 : [...prev, userId]
         );
     };
-
     const handleBulkDelete = async () => {
         if (selectedUsers.length === 0) return alert('Please select at least one user to delete.');
 
@@ -91,7 +73,15 @@ const User = () => {
     };
 
     const handleExport = (type) => {
-        const exportData = filteredUsers.map(({ username, email }) => ({ Username: username, Email: email }));
+        const exportDataSource = selectedUsers.length > 0
+            ? users.filter(user => selectedUsers.includes(user._id))
+            : filteredUsers;
+
+        const exportData = exportDataSource.map(({ username, email }) => ({
+            Username: username,
+            Email: email,
+        }));
+
         const worksheet = XLSX.utils.json_to_sheet(exportData);
         const workbook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(workbook, worksheet, "Users");
@@ -100,6 +90,7 @@ const User = () => {
         const data = new Blob([excelBuffer], { type: "application/octet-stream" });
         saveAs(data, `users_export.${type}`);
     };
+
 
     // 🔍 Filtered users list
     const filteredUsers = users.filter(user =>

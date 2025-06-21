@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import { Modal, Button } from 'react-bootstrap';
 import './Addbus.css';
@@ -417,7 +416,7 @@ const Addbus = () => {
                     <thead>
                         <tr>
                             <th>
-                                <Form.Check type="checkbox" checked={selectedBuses.length === currentBuses.length} onChange={(e) => {
+                                <input type="checkbox" checked={selectedBuses.length === currentBuses.length} onChange={(e) => {
                                     if (e.target.checked) {
                                         setSelectedBuses(currentBuses.map(bus => bus._id));
                                     } else {
@@ -440,7 +439,7 @@ const Addbus = () => {
                         {currentBuses.map((bus, index) => (
                             <tr key={bus._id}>
                                 <td>
-                                    <Form.Check type="checkbox" checked={selectedBuses.includes(bus._id)} onChange={() => {
+                                    <input type="checkbox" checked={selectedBuses.includes(bus._id)} onChange={() => {
                                         if (selectedBuses.includes(bus._id)) {
                                             setSelectedBuses(selectedBuses.filter(id => id !== bus._id));
                                         } else {

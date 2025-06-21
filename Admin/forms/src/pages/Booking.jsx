@@ -19,6 +19,22 @@ const Booking = () => {
     const [showModal, setShowModal] = useState(false);
     const [selectedBookingDetails, setSelectedBookingDetails] = useState(null);
     const [selectAll, setSelectAll] = useState(false);
+    const [usersMap, setUsersMap] = useState({}); // userId -> user object
+
+    useEffect(() => {
+        axios.get('http://localhost:5001/api/auth/users')
+            .then(res => {
+                // Create map: userId -> user object
+                const map = {};
+                res.data.forEach(user => {
+                    map[user._id] = user;
+                });
+                setUsersMap(map);
+            })
+            .catch(err => {
+                console.error('Error fetching users:', err);
+            });
+    }, []);
 
     useEffect(() => {
         // Fetch bookings
@@ -50,22 +66,37 @@ const Booking = () => {
             });
     };
 
-    const exportToExcel = () => {
-        const ws = XLSX.utils.json_to_sheet(bookings);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, 'Bookings');
+    const handleExport = (type) => {
+        const exportDataSource = selectedBookings.length > 0
+            ? bookings.filter(b => selectedBookings.includes(b._id))
+            : bookings;
 
-        const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-        const blob = new Blob([excelBuffer], { bookType: 'xlsx', type: 'application/octet-stream' });
+        const exportData = exportDataSource.map(booking => ({
+            UserName: usersMap[booking.user]?.username || 'Unknown User',
+            Seats: booking.selectedSeats.join(', '),
+            Passengers: booking.passengers.map(p => p.name).join(', '),
+            Email: booking.email,
+            Phone: booking.phone,
+            Total: `Rs:${booking.totalAmount}`,
+            BookedAt: new Date(booking.createdAt || booking.bookedAt).toLocaleString(),
+        }));
 
-        saveAs(blob, 'bookings.xlsx');
-    };
+        if (type === "csv") {
+            const csv = Papa.unparse(exportData);
+            const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+            saveAs(blob, "bookings_export.csv");
+        } else if (type === "xlsx") {
+            const ws = XLSX.utils.json_to_sheet(exportData);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Bookings");
 
-    const exportToCSV = () => {
-        const csv = Papa.unparse(bookings);
-        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+            const blob = new Blob([excelBuffer], {
+                type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            });
 
-        saveAs(blob, 'bookings.csv');
+            saveAs(blob, "bookings_export.xlsx");
+        }
     };
 
     const handleCheckboxChange = (e, bookingId) => {
@@ -96,20 +127,10 @@ const Booking = () => {
             setShowModal(true);
         });
     };
-
-    // const handleDeleteBooking = (bookingId) => {
-    //     axios
-    //         .delete(`http://localhost:5001/api/bookings/${bookingId}`)
-    //         .then(() => {
-    //             setBookings(bookings.filter((booking) => booking._id !== bookingId));
-    //             alert('Booking deleted successfully!');
-    //         })
-    //         .catch((err) => console.error('Error deleting booking:', err));
-    // };
     const handleDeleteBooking = (bookingId) => {
         const confirmDelete = window.confirm("Are you sure you want to delete this booking?");
         if (!confirmDelete) return;
-    
+
         axios
             .delete(`http://localhost:5001/api/bookings/${bookingId}`)
             .then(() => {
@@ -118,7 +139,7 @@ const Booking = () => {
             })
             .catch((err) => console.error('Error deleting booking:', err));
     };
-    
+
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
@@ -130,10 +151,10 @@ const Booking = () => {
                 <input type='text' className='form-control w-25 mb-3' placeholder='Search by Passenger Name' value={search} onChange={(e) => setSearch(e.target.value)} />
                 <div className='d-flex gap-2'>
                     <div className='mb-3'>
-                        <Button className='btn btn-success me-2' onClick={exportToExcel}>
+                        <Button className='btn btn-success me-2' onClick={() => handleExport('xlsx')}>
                             Export to Excel
                         </Button>
-                        <Button className='btn btn-info ml-2' onClick={exportToCSV}>
+                        <Button className='btn btn-info ml-2' onClick={() => handleExport('csv')}>
                             Export to CSV
                         </Button>
                     </div>
@@ -147,13 +168,14 @@ const Booking = () => {
                             <th>
                                 <input type='checkbox' checked={selectAll} onChange={handleSelectAllChange} />
                             </th>
-                            <th>Seats</th>
-                            <th>Passenger(s)</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Total</th>
-                            <th>Booked At</th>
-                            <th>Actions</th>
+                            <th className='tablewidth'>User Name</th>
+                            <th className='tablewidth'>Seats</th>
+                            <th className='tablewidth'>Passenger(s)</th>
+                            <th className='tablewidth'>Email</th>
+                            <th className='tablewidth'>Phone</th>
+                            <th className='tablewidth'>Total</th>
+                            <th className='tablewidth'>Booked At</th>
+                            <th className='tablewidth'>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -162,20 +184,24 @@ const Booking = () => {
                                 <td>
                                     <input type='checkbox' checked={selectedBookings.includes(booking._id)} onChange={(e) => handleCheckboxChange(e, booking._id)} />
                                 </td>
-                                <td>{booking.selectedSeats.join(', ')}</td>
-                                <td>
+                                <td className='tablewidth'>
+                                    {usersMap[booking.user]?.username || 'Unknown User'}
+                                </td>
+
+                                <td className='tablewidth'>{booking.selectedSeats.join(', ')}</td>
+                                <td className='tablewidth'>
                                     {booking.passengers.map((p, i) => (
                                         <div key={i}> {p.name} ({p.gender}, {p.age}) </div>
                                     ))}
                                 </td>
-                                <td>{booking.email}</td>
-                                <td>{booking.countryCode} {booking.phone}</td>
-                                <td>₹{booking.totalAmount}</td>
-                                <td>
+                                <td className='tablewidth'>{booking.email}</td>
+                                <td className='tablewidth'>{booking.countryCode} {booking.phone}</td>
+                                <td className='tablewidth'>Rs:{booking.totalAmount}</td>
+                                <td className='tablewidth'>
                                     {booking.createdAt ? new Date(booking.createdAt).toLocaleString() : 'Date not available'}
                                 </td>
 
-                                <td>
+                                <td className='tablewidth'>
                                     <Button variant='primary' onClick={() => handleViewBooking(booking)}><FaEye /></Button>
                                     <Button variant='danger' className='ms-2' onClick={() => handleDeleteBooking(booking._id)}><RiDeleteBinLine /></Button>
                                 </td>
@@ -183,11 +209,6 @@ const Booking = () => {
                         ))}
                     </tbody>
                 </table>
-                {/* <div className='pagination'>
-                    <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>Previous</button>
-                    <span> Page {currentPage} of {totalPages}</span>
-                    <button onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages}>Next</button>
-                </div> */}
                 <div className="d-flex justify-content-between align-items-center mt-3">
                     <Pagination>
                         <Pagination.First
@@ -240,7 +261,7 @@ const Booking = () => {
                         />
                     </Pagination>
 
-                    <span> Page {currentPage} of {totalPages}</span>
+                    <span> Showing Page {currentPage} of {totalPages} ({totalPages} Pages)</span>
 
                 </div>
 
@@ -254,13 +275,14 @@ const Booking = () => {
                 <Modal.Body>
                     {selectedBookingDetails && (
                         <div>
+                            <h5>User Name: {usersMap[selectedBookingDetails.user]?.username || 'Unknown User'}</h5> {/* User Name Displayed */}
                             <h5>Bus Name: {selectedBookingDetails.bus.busName}</h5> {/* Bus Name Displayed */}
                             <h5>From: {selectedBookingDetails.bus.from}</h5>
                             <h5>To: {selectedBookingDetails.bus.to}</h5>
                             <h5>
                                 Date of Departure:{" "}
                                 {selectedBookingDetails.bus.dateOfDeparture
-                                    ? new Date( selectedBookingDetails.bus.dateOfDeparture).toLocaleDateString("en-IN", {
+                                    ? new Date(selectedBookingDetails.bus.dateOfDeparture).toLocaleDateString("en-IN", {
                                         weekday: "long",
                                         year: "numeric",
                                         month: "long",
@@ -283,9 +305,6 @@ const Booking = () => {
                         </div>
                     )}
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button variant='secondary' onClick={() => setShowModal(false)}>Close</Button>
-                </Modal.Footer>
             </Modal>
         </div>
     );

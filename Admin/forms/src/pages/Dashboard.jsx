@@ -14,10 +14,9 @@ const Dashboard = () => {
         {[
           { title: "Total Bookings", value: 0, icon: "🚌" },
           { title: "Total Revenue", value: "₹0", icon: "💰" },
-          { title: "Total Users", value: 0, icon: "👥" },
-          { title: "Buses Running Today", value: 0, icon: "🚍" },
+          { title: "Total Users", value: 0, icon: "👥" }
         ].map((card, idx) => (
-          <Col md={3} key={idx}>
+          <Col md={4} key={idx}>
             <Card className="text-white bg-primary mb-3 shadow-sm">
               <Card.Body>
                 <div className="d-flex justify-content-between align-items-center">

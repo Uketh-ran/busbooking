@@ -9,7 +9,9 @@ const PaymentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { updateBookedSeats } = useBooking();
-
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const userId = user?.id;
+  const username = user?.username; 
 
   const { bus, selectedSeats } = location.state || {};
   console.log("Bus Data:", bus);
@@ -39,8 +41,17 @@ const PaymentPage = () => {
   });
 
   const onSubmit = async (data) => {
+    // const user = JSON.parse(sessionStorage.getItem("user"));
+    if (!user || !userId) {
+      alert("Please login to book tickets.");
+      navigate("/");
+      return;
+    }
+
     const payload = {
       ...data,
+      user: userId,       // Store user ID from logged-in user
+      username: username, 
       bus: {
         id: bus._id,
         busName: bus.busName,   // Add this
@@ -77,14 +88,14 @@ const PaymentPage = () => {
 
   const formattedDepartureDate = bus.dateOfDeparture
     ? new Date(bus.dateOfDeparture).toLocaleDateString("en-IN", {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    })
     : "Date not available";
 
-    const formattedDepartureTime = bus.departureTime || "Time not available";
+  const formattedDepartureTime = bus.departureTime || "Time not available";
 
   return (
     <div className="bg-light py-4">
@@ -93,7 +104,7 @@ const PaymentPage = () => {
           <h6 className="mb-1">Bus Information</h6>
           <p className="mb-0">
             <strong>{bus.busName}</strong> <br />
-            {bus.from} ➝ {bus.to} <br /> 
+            {bus.from} ➝ {bus.to} <br />
             <strong>{formattedDepartureDate}</strong> at {formattedDepartureTime} <br />
           </p>
         </div>
@@ -186,7 +197,7 @@ const PaymentPage = () => {
               <strong>Total Amount :</strong> INR {bus.price * selectedSeats.length}.00 <br />
               <small className="text-muted">(*Exclusive of Taxes)</small>
             </div>
-            <Button type="submit" className="btn-danger px-4"> PROCEED TO PAY </Button>
+            <Button type="submit" className="btn-danger px-4">PROCEED</Button>
           </div>
         </Form>
       </Container>

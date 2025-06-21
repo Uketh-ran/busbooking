@@ -155,11 +155,11 @@ const Sidebar = () => {
           </Collapse>
         </li>
 
-        <li className="nav-item mb-2">
+        {/* <li className="nav-item mb-2">
           <Link to="/admin/buses" className="nav-link text-white">
             <i className="bi bi-bus-front me-2"></i> AddBuses
           </Link>
-        </li>
+        </li> */}
         <li className="nav-item mb-2">
           <Link to="/admin/offers" className="nav-link text-white">
             <i className="bi bi-ticket-perforated me-2"></i> Offers
